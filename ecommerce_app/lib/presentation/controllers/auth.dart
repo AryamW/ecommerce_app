@@ -229,19 +229,16 @@ class RegisterConroller extends LoginController {
   RxnString confirmError = RxnString(null);
 
   void validateFirstName() {
-    if (firstNameController.text.length < 6) {
-      firstNameError.value = "firstname must be at least 6 characters";
-    } else {
+    
       firstNameError.value = null;
-    }
+  
   }
 
   void validateLastName() {
-    if (lastNameController.text.length < 6) {
-      lastNameError.value = "lastname must be at least 6 characters";
-    } else {
+   
+   
       lastNameError.value = null;
-    }
+    
   }
 
   void validateConfirm() {

@@ -154,7 +154,7 @@ class SingleOrderItem extends StatelessWidget {
                                     onPressed: () {
                                       Navigator.of(context)
                                           .pop(); // Close the dialog
-                                      OrderController().delivered(order.orderId, order.status + 1); // Proceed with the function
+                                    Get.find<AdminUsersController>().delivered(order.orderId, order.status + 1); // Proceed with the function
                                     },
                                     child: Text(
                                       'Yes',

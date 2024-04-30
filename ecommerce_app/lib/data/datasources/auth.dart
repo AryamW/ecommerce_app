@@ -39,8 +39,7 @@ class AuthDataSource {
         // log in
         // return await login(
         //     LoginModel(email: user.email, password: user.password));
-        await dio.saveTokens(res.data["accessToken"], res.data["refreshToken"],
-            res.data["role"]);
+        
         return true;
       }
     } on AuthException catch (e) {

@@ -120,7 +120,7 @@ class AdminUserDataSource {
       } else
         return null;
     } on DioException catch (e) {
-      print("here?");
+      print("here?DioExc: ${e.message}");
       handledioExceptions(e);
     } catch (e) {
       print("here? $e");
@@ -128,5 +128,22 @@ class AdminUserDataSource {
       rethrow;
     }
     return null;
+  }
+
+
+  Future<bool> delivered(int id, int status) async {
+    try {
+      var res = await dio.dio.patch("/order/status/$id", data: {"status": status});
+      if (res.statusCode == 200) {
+        print("herererer?");
+        return true;
+      }
+    } on DioException catch (e) {
+      print("the statsy: ${e.message}");
+      handledioExceptions(e);
+    } catch (e) {
+      rethrow;
+    }
+    return false;
   }
 }

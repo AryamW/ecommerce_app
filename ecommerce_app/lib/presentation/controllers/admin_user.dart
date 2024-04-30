@@ -227,4 +227,60 @@ class AdminUsersController extends RegisterConroller {
     }
     return null;
   }
+
+  void delivered(int id, int status) async {
+    try {
+      var res = await useCase.delivered(id, status);
+      // recentOrders.refresh();
+      if (res == true) {
+        // print("the id:$id");
+        // var o = recentOrders.value.firstWhere((element) => element.orderId == id);
+        // // for (var order in recentOrders.value) {
+        // //   print("the id: $id, the pID: ${order.orderId}");
+        // //   if (order.orderId == id) {
+        // //   }
+        // // }
+        //     o.status = status;
+        // recentOrders.refresh();
+        await fetchRecentOrders();
+      }
+    } on BadResponseException catch (e) {
+      if (e.statusCode == 404) {
+        Get.snackbar(
+            isDismissible: true,
+            duration: Duration(seconds: 10),
+            backgroundColor: ThemeData.dark().colorScheme.secondary,
+            colorText: ThemeData.dark().colorScheme.onPrimary,
+            "Not Exist",
+            "The Order doesn't exist");
+      } else if (e.statusCode == 400) {
+        print(e.message);
+        Get.snackbar(
+            isDismissible: true,
+            duration: Duration(seconds: 10),
+            backgroundColor: ThemeData.dark().colorScheme.secondary,
+            colorText: ThemeData.dark().colorScheme.onPrimary,
+            "Invalid",
+            "invalid request.");
+      } else if (e.statusCode == 500) {
+        Get.toNamed("/error", arguments: {
+          "message": "A Server Error has occured. try again later."
+        });
+      } else if (e.statusCode == 403) {
+        Get.toNamed("/error",
+            arguments: {"message": "Something went wrong. ${e.toString()}"});
+      } else {
+        Get.toNamed("/error",
+            arguments: {"message": "Something went wrong. ${e.toString()}"});
+      }
+    } on NetworkException catch (e) {
+      Get.toNamed("/error", arguments: {"message": e.toString()});
+    } on CustomeException catch (e) {
+      Get.toNamed("/error", arguments: {"message": e.toString()});
+    } catch (e) {
+      print(e);
+      Get.toNamed("/error",
+          arguments: {"message": "something went wrong. try again later"});
+    }
+  }
 }

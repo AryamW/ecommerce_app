@@ -16,12 +16,5 @@ class OrderRepositoryImp implements IOrderRepository {
     }
   }
 
-  @override
-  Future<bool> delivered(int id, int status) async {
-    try {
-      return await dataSource.delivered(id, status);
-    } catch (e) {
-      rethrow;
-    }
-  }
+  
 }

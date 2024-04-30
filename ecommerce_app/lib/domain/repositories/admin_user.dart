@@ -9,6 +9,8 @@ abstract class IAdminUsers {
   Future<bool> register(RegisterModel user);
   Future<List<ReviewModel>> fetchRecentReviews();
   Future<RecentOrders?> fetchRecentOrders();
+  Future<bool> delivered(int id, int status);
+
 
 
 }

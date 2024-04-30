@@ -62,20 +62,18 @@ class DashBoard extends StatelessWidget {
                             style: TextStyle(
                                 color: Theme.of(context).colorScheme.onPrimary),
                           ),
-                           GestureDetector(
+                          GestureDetector(
                             onTap: () {
-                              
                               Get.toNamed("/admin-recent-reviews");
-                              
                             },
                             child: Text(
-                            "View All",
-                            style: TextStyle(color: Colors.orange),
-                          ),)
+                              "View All",
+                              style: TextStyle(color: Colors.orange),
+                            ),
+                          )
                         ],
                       ),
                     ),
-                   
                     SizedBox(
                       height: 20,
                     ),
@@ -90,7 +88,24 @@ class DashBoard extends StatelessWidget {
                                       .onSecondary)),
                         );
                       } else if (controller.recentReviewsError.isNotEmpty) {
-                        return Text(controller.recentReviewsError.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSecondary));
+                        return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("ErrCode: ${controller.recentReviewsError['status']}",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary)),
+                            SizedBox(
+                              height: 4,
+                            ),
+                            Text(controller.recentReviewsError['message'],
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary)),
+                          ],
+                        );
                       } else {
                         return reviewWidget(
                             review: controller.recentReviews.value[0]);
@@ -124,8 +139,6 @@ class DashBoard extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-
-                              
                               Get.toNamed("/admin-recent-orders");
                             },
                             child: Text(
@@ -136,8 +149,6 @@ class DashBoard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    
-                   
                     Obx(() {
                       if (controller.recentOrders.value.isEmpty &&
                           controller.recentOrdersError.isEmpty) {
@@ -149,7 +160,26 @@ class DashBoard extends StatelessWidget {
                                       .onSecondary)),
                         );
                       } else if (controller.recentOrdersError.isNotEmpty) {
-                        return Text(controller.recentOrdersError.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSecondary));
+                        // return Text(controller.recentOrdersError.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSecondary));
+                        return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                          children: [
+                            Text("ErrCode: ${controller.recentOrdersError['status']}",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary)),
+                            SizedBox(
+                              height: 4,
+                            ),
+                            Text(controller.recentOrdersError['message'],
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary)),
+                          ],
+                        );
                       } else {
                         return ordersWidget(
                           count: controller.monthlyOrder.value,
@@ -188,14 +218,24 @@ class ordersWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-Wrap(
-  crossAxisAlignment: WrapCrossAlignment.center,
-  
-  children: [
-  Text("$count", style: TextStyle(color: Theme.of(context).colorScheme.tertiary, fontSize: 36, fontWeight: FontWeight.bold),),
-  Text("\tOrder${count > 1 ? "s" : ""} in this Month", style: TextStyle(color: Theme.of(context).colorScheme.onSecondary, fontSize: 12),)
-],),
-
+        Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Text(
+              "$count",
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.tertiary,
+                  fontSize: 36,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "\tOrder${count > 1 ? "s" : ""} in this Month",
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  fontSize: 12),
+            )
+          ],
+        ),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -212,8 +252,8 @@ Wrap(
                       ),
                       Text(
                         "${order.user?.firstname ?? "Unknown"}",
-                        style:
-                            TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary),
                       ),
                     ],
                   ),
@@ -235,14 +275,15 @@ Wrap(
                           Text(
                             order.orderNumber,
                             style: TextStyle(
-                                color: Theme.of(context).colorScheme.onSecondary),
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary),
                           ),
                         ],
                       ),
                       Text(
                         "Amount: ${order!.paymentInfo.amount}",
-                        style:
-                            TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary),
                       ),
                     ],
                   )
@@ -255,8 +296,6 @@ Wrap(
     );
   }
 }
-
-
 
 class reviewWidget extends StatelessWidget {
   final ReviewModel review;
@@ -288,7 +327,8 @@ class reviewWidget extends StatelessWidget {
                     child: Text(
                       "${review.name}",
                       style: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimary, overflow: TextOverflow.clip),
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          overflow: TextOverflow.clip),
                     ),
                   ),
                   Row(
