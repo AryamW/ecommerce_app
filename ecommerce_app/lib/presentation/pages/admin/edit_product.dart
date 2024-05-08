@@ -617,8 +617,8 @@ class SelectableImage extends StatelessWidget {
               // print(error.runtimeType);
               return Image.network(
                 "https://red-ecommerce.onrender.com/images/DefaultImage.jpg",
-                height: 50,
-                fit: BoxFit.fill,
+                width: double.maxFinite,
+                fit: BoxFit.contain,
                 errorBuilder: (context, error, stackTrace) {
                   return Image.asset("lib/assets/images/DefaultImage.jpg");
                 },

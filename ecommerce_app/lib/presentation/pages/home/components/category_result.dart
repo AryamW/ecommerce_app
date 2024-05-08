@@ -150,8 +150,8 @@ class ProductCard extends StatelessWidget {
                           errorBuilder: (context, error, stackTrace) {
                             return Image.network(
                               "https://red-ecommerce.onrender.com/images/DefaultImage.jpg",
-                              height: 50,
-                              fit: BoxFit.fill,
+                              width: double.maxFinite,
+                              fit: BoxFit.contain,
                               errorBuilder: (context, error, stackTrace) {
                                 return Image.asset(
                                     "lib/assets/images/DefaultImage.jpg");

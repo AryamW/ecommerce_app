@@ -15,7 +15,7 @@ import '../../widgets/button.dart';
 
 
 class SearchPage extends StatelessWidget {
-  final String? keyWord = Get.arguments['keyword'];
+  final String? keyWord = Get.arguments?['keyword'];
   SearchPage({super.key});
    
  @override
@@ -85,7 +85,7 @@ final SearchProductsUseCase searchProductsUseCase = SearchProductsUseCaseImpl(se
           SizedBox(
             height: 40,
             child: ListView(
-              itemExtent: 200,
+              padding:  EdgeInsets.only(left: 20),
               scrollDirection: Axis.horizontal,
               children: [
                 Obx(() => FilterChip(
@@ -100,6 +100,7 @@ final SearchProductsUseCase searchProductsUseCase = SearchProductsUseCaseImpl(se
                     color: MaterialStatePropertyAll(Theme.of(context).colorScheme.tertiary),
                   ),
                 ),
+                SizedBox(width: 20,),
                 SortButton()
               ],
             ),
@@ -219,6 +220,7 @@ class SortButton extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onPrimary,
                 fontWeight: FontWeight.bold),
           ),
+                SizedBox(width: 20,),
           Row(
             children: [
               Obx(()=> Text(Get.find<SearchPageController>().currentChoice.value, style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),)),
