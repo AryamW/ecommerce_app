@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 class EditUserController extends GetxController {
   late GetUserModel? user;
   EditUserController(){
-  user = Get.arguments['user']; 
+  user = Get.arguments?['user']; 
   if (user!=null){
     firstNameController.text = user!.firstname ?? '';
     lastNameController.text = user!.lastname ?? '';

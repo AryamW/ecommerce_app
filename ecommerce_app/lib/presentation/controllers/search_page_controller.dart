@@ -151,6 +151,7 @@ class SearchPageController extends GetxController {
     newItems.clear();
     cancelTokens.clear();
     _cancelToken = null; //
+    searchWordController.clear();
     // _pagingController.dispose();
     super.onClose();
   }

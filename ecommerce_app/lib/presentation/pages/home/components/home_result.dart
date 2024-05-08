@@ -15,6 +15,8 @@ class HomeResult extends StatelessWidget {
  @override
  Widget build(BuildContext context) {
     return RefreshIndicator(
+      color: Theme.of(context).colorScheme.onPrimary,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       onRefresh: () => Future.sync(() => productController.refresh()),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),

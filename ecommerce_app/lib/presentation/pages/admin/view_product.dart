@@ -455,6 +455,8 @@ class Results extends StatelessWidget {
   Widget build(BuildContext context) {
             print(productController.results.length);
     return RefreshIndicator(
+      color: Theme.of(context).colorScheme.onPrimary,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       onRefresh: () => Future.sync(() => productController.refresh()),
       child: Obx(
         ()=> Stack(

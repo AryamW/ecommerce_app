@@ -20,6 +20,8 @@ class SettingsBody extends StatelessWidget {
       child: Container(
         constraints: BoxConstraints(maxWidth: 600) ,
         child: RefreshIndicator(
+        color: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
           onRefresh: () => Future.sync(() => Get.find<SettingsController>().loadUser()),
           child: SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),

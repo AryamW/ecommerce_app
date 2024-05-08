@@ -15,7 +15,7 @@ class EditAddressController extends GetxController {
   bool valid = false;
   late AddressModel? address;
   EditAddressController({required this.createNewAddress}){
-  address = Get.arguments['address']; 
+  address = Get.arguments?['address'] ?? AddressModel(); 
   if (address!=null){
     streetController.text = address!.street ?? '';
     cityController.text = address!.city ?? '';

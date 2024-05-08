@@ -27,28 +27,33 @@ class EntryPage extends StatelessWidget {
     Get.put(NavigationController());
     Get.put(SettingsController());
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: LayoutBuilder(builder: (context, constraints) {
         if (constraints.maxWidth < 550) {
           return Obx(
-            () => Column(children: [
-              Expanded(
-                child: Get.find<NavigationController>().pages[
-                    Get.find<NavigationController>().selectedIndex.value],
-              ),
-              SafeNavBar(),
-            ]),
-          );
-        } else {
-          return Obx(
-            () => Row(
-              children: [
-                SafeNavRail(),
+            () => SafeArea(
+              child: Column(children: [
                 Expanded(
                   child: Get.find<NavigationController>().pages[
                       Get.find<NavigationController>().selectedIndex.value],
                 ),
-              ],
+                SafeNavBar(),
+              ]),
+            ),
+          );
+        } else {
+          return Obx(
+            () => SafeArea(
+              child: Row(
+                children: [
+                  SafeNavRail(),
+                  Expanded(
+                    child: Get.find<NavigationController>().pages[
+                        Get.find<NavigationController>().selectedIndex.value],
+                  ),
+                ],
+              ),
             ),
           );
         }

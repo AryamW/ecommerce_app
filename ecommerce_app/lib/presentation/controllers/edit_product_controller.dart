@@ -22,9 +22,9 @@ AdminProduct adminProduct = AdminProduct();
  var imgList = [].obs;
 @override
 EditProductController(){
-  print("getAP: ${Get.arguments?['product']?.id}");
+  //print("getAP: ${Get.arguments?['product']?.id}");
   var apid = Get.arguments?['product']?.id;
-  print("getAPid: ${apid}");
+  //print("getAPid: ${apid}");
  if(Get.arguments?['product'] != null){ 
   getAP(Get.arguments?['product']?.id);}
 }
@@ -33,15 +33,15 @@ void getAP(int apid) async{
   var use = EditProductCase(
             repo:
                 EditProductRepositoryImpl(editProductProvider: EditProductDataSource()));
-                print("getAP: ${apid}");
+                //print("getAP: ${apid}");
                 ap.value = await use.getProduct(apid) ?? AdminProduct();
                 start();
-                // print(imgList.value);
+                // //print(imgList.value);
 
 }
 
 void start() {
-    print("fffffffffffff${ap.value.id}");
+    //print("fffffffffffff${ap.value.id}");
     // if(ap.id!=null) {getProduct(ap.id!);}
     if(ap.value.toAdminJson().toString() != {}.toString())
     {
@@ -70,7 +70,7 @@ adminProduct = await use.getProduct(apid)?? AdminProduct();
 
 @override
   void refresh() {
-    // print("fffffffffffff${adminProduct.id}");
+    // //print("fffffffffffff${adminProduct.id}");
     // if(adminProduct.id!=null) {getProduct(adminProduct.id!);}
     // if (adminProduct != null){
     //   NameController.text = adminProduct!.name.toString();
@@ -125,7 +125,7 @@ var selectedImages = <String>[].obs;
       ImagesController.text = ximage.path;
       imageIsSet.value =true;
     } else {
-      print('No image selected.');
+      //print('No image selected.');
     }
   }
   void unPickImage(){
@@ -319,7 +319,7 @@ var selectedImages = <String>[].obs;
     // on CustomeException catch (e) {
     //   Get.toNamed("/error", arguments: {"message": e.toString()});
     // } catch (e) {
-    //   print(e.runtimeType);
+    //   //print(e.runtimeType);
     //   Get.toNamed("/error", arguments: {"message": "Something went wrong r"});
     // }
   }
@@ -368,7 +368,7 @@ var selectedImages = <String>[].obs;
                   onTap: (snack) {
                     Get.offUntil(GetPageRoute(page: ()=>EditProduct(),
                     settings: RouteSettings(arguments: {'product':res})), ((route) {
-                      print("route:$route.");
+                      //print("route:$route.");
                       return route.settings.name == "/adminProducts";
                     } ));
                   },
@@ -423,7 +423,7 @@ var selectedImages = <String>[].obs;
     // on CustomeException catch (e) {
     //   Get.toNamed("/error", arguments: {"message": e.toString()});
     // } catch (e) {
-    //   print(e.runtimeType);
+    //   //print(e.runtimeType);
     //   Get.toNamed("/error", arguments: {"message": "Something went wrong r"});
     // }
   }
@@ -496,7 +496,7 @@ void deleteProduct() async{
 
 void deleteImage() async{
   try {
-    print(id);
+    //print(id);
 
         if(selectedImages.isNotEmpty && id != null){
           var use = EditProductCase(
@@ -506,14 +506,14 @@ void deleteImage() async{
                 selectedImages.forEach((element) {
                   selectedImagesToQuery.add(element.split("/").last);
                 });
-                // print("bsdfbdsfbzdf${selectedImagesToQuery.join(',')}");
+                // //print("bsdfbdsfbzdf${selectedImagesToQuery.join(',')}");
           var res=  await use.deleteImage(id!, selectedImagesToQuery);
           if(res == true){
                     refresh();
                     selectedImages.forEach((element) {
                   adminProduct.imageUrl?.remove(element);
                 });
-                print("string${adminProduct.imageUrl.toString()}");
+                //print("string${adminProduct.imageUrl.toString()}");
                     Future.sync(() => Get.find<EditProductController>().refresh());
                   Get.snackbar(
                       "Image Deleted", "Product Image deleted successfully",
