@@ -1,27 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
-
-import 'package:app_links/app_links.dart';
-import 'package:ecommerce_app/presentation/controllers/auth.dart';
-import 'package:ecommerce_app/presentation/pages/auth/forgotPassword.dart';
-import 'package:ecommerce_app/presentation/widgets/roleBasedAccessControlWidget.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:uni_links/uni_links.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_strategy/url_strategy.dart';
-import 'package:ecommerce_app/presentation/pages/auth/login.dart';
-import 'package:ecommerce_app/presentation/pages/cart/Cart.dart';
-import 'package:ecommerce_app/presentation/pages/checkout/addCheckout.dart';
-import 'package:ecommerce_app/presentation/pages/checkout/checkout.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:ecommerce_app/core/routes/routes.dart';
 import 'package:ecommerce_app/presentation/pages/entry_page.dart';
-import 'package:ecommerce_app/presentation/pages/home/home.dart';
-// import 'package:ecommerce_app/presentation/pages/products/productDetail.dart';
-import 'package:ecommerce_app/presentation/pages/products/product_detail.dart';
-import 'package:flutter/material.dart';
-
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get/get.dart';
+import 'package:ecommerce_app/presentation/controllers/auth.dart';
+import 'package:ecommerce_app/presentation/widgets/roleBasedAccessControlWidget.dart';
 
 void main() async {
   await dotenv.load();
@@ -84,10 +72,22 @@ ThemeData darkTheme = ThemeData(
 class ThemeController extends GetxController {
   RxBool isSwitched = false.obs;
   Rx<ThemeMode> theme = ThemeMode.dark.obs;
+  @override
+  void onInit() {
+    try{isSwitched.value? SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark): SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);}catch(e){}
+    super.onInit();
+    
+  }
   void onItemTapped() {
     isSwitched.value = !isSwitched.value;
-    if (isSwitched.value) theme.value = ThemeMode.light;
-    if (!isSwitched.value) theme.value = ThemeMode.dark;
+    if (isSwitched.value) {
+      theme.value = ThemeMode.light;
+      try{SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);}catch(e){}
+    }
+    if (!isSwitched.value) {
+      theme.value = ThemeMode.dark;
+      try{SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);}catch(e){}
+    }
   }
 }
 
