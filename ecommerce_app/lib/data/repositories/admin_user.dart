@@ -62,4 +62,12 @@ class AdminUserImp implements IAdminUsers {
       rethrow;
     }
   }
+
+  Future<List<Product>> fetchMostPopularProducts() async {
+    try {
+      return await dataSource.fetchMostPopularProducts();
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

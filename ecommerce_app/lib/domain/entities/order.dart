@@ -9,8 +9,8 @@ class Order {
   final Map<String, dynamic>? shippingAddress;
   final Map<String, dynamic>? billingAddress;
   final PaymentInfo paymentInfo;
-  final String orderDate;
-  final String updatedAt;
+  final DateTime? orderDate;
+  final DateTime? updatedAt;
   final List<OrderItem> items;
 
   const Order({
@@ -36,8 +36,8 @@ class Order {
         shippingAddress: json['shippingAddress'],
         
         paymentInfo: PaymentInfo.fromJson(json['paymentInfo']),
-        orderDate: json["orderDate"] ?? "N/A",
-        updatedAt: json["updatedAt"] ?? "N/A",
+        orderDate: DateTime.parse(json["orderDate"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
         items: json["items"]
             ?.map((elem) {
               return OrderItem.fromJson(elem);
@@ -77,8 +77,8 @@ class OrderItem {
   final int quantity;
   final num price;
   final Map<String, dynamic>? product;
-  final String createdAt;
-  final String updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   OrderItem(
       {required this.orderItemId,
@@ -89,8 +89,8 @@ class OrderItem {
       required this.updatedAt});
   factory OrderItem.fromJson(Map<String, dynamic> json) {
     return OrderItem(
-        createdAt: json["createdAt"] ?? "N/A",
-        updatedAt: json["updatedAt"] ?? "N/A",
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
         product: json['product'],
         price: json["price"] ?? "N/A",
         quantity: json['quantity'] ?? "N/A",
@@ -114,22 +114,22 @@ class PaymentInfo {
   final num amount;
   final String currency;
   final String txRef;
-  final String createdAt;
-  final String updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   PaymentInfo(
       {required this.paymentInfoId,
       required this.amount,
       required this.currency,
       required this.txRef,
-      required this.createdAt,
-      required this.updatedAt});
+       this.createdAt,
+       this.updatedAt});
 
   factory PaymentInfo.fromJson(Map<String, dynamic> json) {
     print("payment info json: $json");
     return PaymentInfo(
-        createdAt: json["createdAt"] ?? "N/A",
-        updatedAt: json["updatedAt"] ?? "N/A",
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
         currency: json['currency'] ?? "N/A",
         txRef: json["txRef"] ?? "N/A",
         amount: json['amount'] ?? "N/A",

@@ -130,20 +130,40 @@ class AdminUserDataSource {
     return null;
   }
 
-
   Future<bool> delivered(int id, int status) async {
     try {
-      var res = await dio.dio.patch("/order/status/$id", data: {"status": status});
+      var res =
+          await dio.dio.patch("/order/status/$id", data: {"status": status});
       if (res.statusCode == 200) {
-        print("herererer?");
         return true;
       }
     } on DioException catch (e) {
-      print("the statsy: ${e.message}");
       handledioExceptions(e);
     } catch (e) {
       rethrow;
     }
     return false;
+  }
+
+  Future<List<Product>> fetchMostPopularProducts() async {
+    try {
+      var res = await dio.dio.get("/product");
+      if (res.statusCode == 200) {
+        // print("products: ${res.data['productDtos']}");
+        List? data = res.data['productDtos'];
+        // print("data: $data");
+        if (data != null) {
+          List<Product> reList = data.map((e) => Product.fromJson(e)).toList();
+          return reList;
+        }
+      }
+    } on DioException catch (e) {
+      print("here ? ? ?");
+      print(e);
+      handledioExceptions(e);
+    } catch (e) {
+      rethrow;
+    }
+    return [];
   }
 }

@@ -54,7 +54,7 @@ class PDetailController extends GetxController {
               arguments: {"message": "Invalid Request Format."});
         } else {
           Get.toNamed("/error",
-              arguments: {"message": "Something went wrong p"});
+              arguments: {"message": "Something went wrong"});
         }
       } on NetworkException catch (e) {
         Get.toNamed("/error", arguments: {

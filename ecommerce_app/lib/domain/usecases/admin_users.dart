@@ -17,7 +17,7 @@ class AdminUserUseCase {
     }
   }
 
-   Future<bool> deleteUser(String id, String email) async {
+  Future<bool> deleteUser(String id, String email) async {
     try {
       return await repo.deleteUser(id, email);
     } catch (e) {
@@ -49,7 +49,7 @@ class AdminUserUseCase {
     }
   }
 
-   Future<bool> delivered(int id, int status) async {
+  Future<bool> delivered(int id, int status) async {
     try {
       return await repo.delivered(id, status);
     } catch (e) {
@@ -57,5 +57,11 @@ class AdminUserUseCase {
     }
   }
 
-
+  Future<List<Product>> fetchMostPopularProducts() async {
+    try {
+      return await repo.fetchMostPopularProducts();
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

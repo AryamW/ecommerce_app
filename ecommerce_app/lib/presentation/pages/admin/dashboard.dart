@@ -34,6 +34,7 @@ class DashBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     controller.fetchRecentOrders();
     controller.fetchRecentReviews();
+    controller.fetchMostPopularProducts();
     return Container(
       padding: EdgeInsets.all(40),
       child: Wrap(
@@ -89,9 +90,10 @@ class DashBoard extends StatelessWidget {
                         );
                       } else if (controller.recentReviewsError.isNotEmpty) {
                         return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("ErrCode: ${controller.recentReviewsError['status']}",
+                            Text(
+                                "ErrCode: ${controller.recentReviewsError['status']}",
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -116,7 +118,6 @@ class DashBoard extends StatelessWidget {
               ),
             ),
           ),
-
           Container(
             width: 350,
             child: Card(
@@ -162,10 +163,10 @@ class DashBoard extends StatelessWidget {
                       } else if (controller.recentOrdersError.isNotEmpty) {
                         // return Text(controller.recentOrdersError.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSecondary));
                         return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("ErrCode: ${controller.recentOrdersError['status']}",
+                            Text(
+                                "ErrCode: ${controller.recentOrdersError['status']}",
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -192,14 +193,277 @@ class DashBoard extends StatelessWidget {
               ),
             ),
           ),
-
-          // Obx(() => ordersWidget(
-          //     count: controller.monthlyOrder.value,
-          //     order: controller.recentOrders.value.isEmpty
-          //         ? null
-          //         : controller.recentOrders.value[0]))
+          Container(
+            width: 350,
+            child: Card(
+              color: Theme.of(context).colorScheme.secondary,
+              child: Container(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      child: Wrap(
+                        alignment: WrapAlignment.spaceBetween,
+                        runAlignment: WrapAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Most Popular Products",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.onPrimary),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.toNamed("/admin-most-products");
+                            },
+                            child: Text(
+                              "View All",
+                              style: TextStyle(color: Colors.orange),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Obx(() {
+                      if (controller.mostPopularProducts.value.isEmpty &&
+                          controller.mostPopularProductsError.isEmpty) {
+                        return Center(
+                          child: Text("No Product.",
+                              style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondary)),
+                        );
+                      } else if (controller
+                          .mostPopularProductsError.isNotEmpty) {
+                        // return Text(controller.mostPopularProductsError.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSecondary));
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                "ErrCode: ${controller.mostPopularProductsError['status']}",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary)),
+                            SizedBox(
+                              height: 4,
+                            ),
+                            Text(controller.mostPopularProductsError['message'],
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary)),
+                          ],
+                        );
+                      } else {
+                        return TopProductsWidget(
+                          count: controller.topProductNumber.value,
+                          product: controller.mostPopularProducts.value[0],
+                          title: "Most Popular \nProducts in this Month",
+                        );
+                      }
+                    })
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Container(
+            width: 350,
+            child: Card(
+              color: Theme.of(context).colorScheme.secondary,
+              child: Container(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      child: Wrap(
+                        alignment: WrapAlignment.spaceBetween,
+                        runAlignment: WrapAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Out of Stock Products",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.onPrimary),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.toNamed("/admin-out-of-stock");
+                            },
+                            child: Text(
+                              "View All",
+                              style: TextStyle(color: Colors.orange),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Obx(() {
+                      if (controller.outOfStockProducts.value.isEmpty &&
+                          controller.outOfStockProductsError.isEmpty) {
+                        return Center(
+                          child: Text("No Product out of stock.",
+                              style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondary)),
+                        );
+                      } else if (controller
+                          .outOfStockProductsError.isNotEmpty) {
+                        // return Text(controller.outOfStockProductsError.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSecondary));
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                "ErrCode: ${controller.outOfStockProductsError['status']}",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary)),
+                            SizedBox(
+                              height: 4,
+                            ),
+                            Text(controller.outOfStockProductsError['message'],
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary)),
+                          ],
+                        );
+                      } else {
+                        return TopProductsWidget(
+                          count: controller.outOfStockNumber.value,
+                          product: controller.outOfStockProducts.value[0],
+                          title: "Out of Stock Products",
+                        );
+                      }
+                    })
+                  ],
+                ),
+              ),
+            ),
+          ),
         ],
       ),
+    );
+  }
+}
+
+class TopProductsWidget extends StatelessWidget {
+  final int count;
+  final Product product;
+  final String title;
+  const TopProductsWidget({
+    super.key,
+    required this.count,
+    required this.product,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Text(
+              "$count",
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.tertiary,
+                  fontSize: 36,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              "Most Popular \nProducts in this Month",
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  fontSize: 12),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleProductWidget(
+            product: product,
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+      ],
+    );
+  }
+}
+
+class SingleProductWidget extends StatelessWidget {
+  final Product product;
+
+  const SingleProductWidget({
+    super.key,
+    required this.product,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      direction: Axis.horizontal,
+      children: [
+        Image.network(
+          product.imageUrl[0],
+          width: 50,
+          height: 50,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              width: 50,
+              height: 50,
+              color: Theme.of(context).colorScheme.secondary,
+            );
+          },
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Wrap(
+          direction: Axis.vertical,
+          children: [
+            Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(),
+              width: 200,
+              child: Text(
+                product.name,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.clip,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "\$${product.price.toStringAsFixed(2)}",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.tertiary,
+                fontWeight: FontWeight.bold,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

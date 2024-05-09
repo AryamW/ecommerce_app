@@ -206,7 +206,7 @@ class LoginController extends GetxController {
         Get.offAllNamed("/login", arguments: {"message": e.message});
       }
     } catch (e) {
-      Get.toNamed("/error", arguments: {"message": "Something went wrong l"});
+      Get.toNamed("/error", arguments: {"message": "Something went wrong"});
     }
   }
 
@@ -297,7 +297,7 @@ class RegisterConroller extends LoginController {
         Get.offAllNamed("/register", arguments: {"message": e.message});
       }
     } catch (e) {
-      Get.toNamed("/error", arguments: {"message": "Something went wrong r"});
+      Get.toNamed("/error", arguments: {"message": "Something went wrong"});
     }
   }
 
@@ -418,7 +418,7 @@ class ForgotPasswordController extends GetxController {
         Get.offAllNamed("/login", arguments: {"message": e.message});
       }
     } catch (e) {
-      Get.toNamed("/error", arguments: {"message": "Something went wrong f"});
+      Get.toNamed("/error", arguments: {"message": "Something went wrong"});
     }
 
     emailController.text = '';
@@ -474,7 +474,7 @@ class ForgotPasswordController extends GetxController {
         Get.offAllNamed("/login", arguments: {"message": e.message});
       }
     } catch (e) {
-      Get.toNamed("/error", arguments: {"message": "Something went wrong f"});
+      Get.toNamed("/error", arguments: {"message": "Something went wrong"});
     }
   }
 }

@@ -10,7 +10,5 @@ abstract class IAdminUsers {
   Future<List<ReviewModel>> fetchRecentReviews();
   Future<RecentOrders?> fetchRecentOrders();
   Future<bool> delivered(int id, int status);
-
-
-
+  Future<List<Product>> fetchMostPopularProducts();
 }

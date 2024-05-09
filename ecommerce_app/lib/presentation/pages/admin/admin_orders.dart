@@ -41,7 +41,6 @@ class AllOrders extends StatelessWidget {
             Order order = orders[index];
             return GestureDetector(
                 onTap: () {
-                  print("here");
                   // go to a screen that shows all of the details of that order
                   Get.toNamed("/order-detail", arguments: {"order": order});
                 },
@@ -173,7 +172,7 @@ class SingleOrderItem extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                'Order Date: ${order.orderDate}',
+                'Order Date: ${order.orderDate ?? "N/A"}',
                 style:
                     TextStyle(color: Theme.of(context).colorScheme.onSecondary),
               ),

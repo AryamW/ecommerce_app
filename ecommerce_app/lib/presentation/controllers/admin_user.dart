@@ -32,6 +32,15 @@ class AdminUsersController extends RegisterConroller {
   final currentPage = 0.obs;
   final rowsPerPage = 10.obs;
   final currentPageUsers = Rx<List<GetUserModel>>([]);
+
+  final mostPopularProducts = Rx<List<Product>>([]);
+  final mostPopularProductsError = RxMap({});
+  final topProductNumber = 10.obs;
+
+  final outOfStockProducts = Rx<List<Product>>([]);
+  final outOfStockProductsError = RxMap({});
+  final outOfStockNumber = 0.obs;
+
   AdminUserUseCase useCase =
       AdminUserUseCase(repo: AdminUserImp(dataSource: AdminUserDataSource()));
   Future<List<GetUserModel>> fetchUsers() async {
@@ -184,7 +193,7 @@ class AdminUsersController extends RegisterConroller {
         Get.back();
       }
     } catch (e) {
-      Get.toNamed("/error", arguments: {"message": "Something went wrong r"});
+      Get.toNamed("/error", arguments: {"message": "Something went wrong"});
     }
   }
 
@@ -248,16 +257,15 @@ class AdminUsersController extends RegisterConroller {
       if (e.statusCode == 404) {
         Get.snackbar(
             isDismissible: true,
-            duration: Duration(seconds: 10),
+            duration: const Duration(seconds: 10),
             backgroundColor: ThemeData.dark().colorScheme.secondary,
             colorText: ThemeData.dark().colorScheme.onPrimary,
             "Not Exist",
             "The Order doesn't exist");
       } else if (e.statusCode == 400) {
-        print(e.message);
         Get.snackbar(
             isDismissible: true,
-            duration: Duration(seconds: 10),
+            duration: const Duration(seconds: 10),
             backgroundColor: ThemeData.dark().colorScheme.secondary,
             colorText: ThemeData.dark().colorScheme.onPrimary,
             "Invalid",
@@ -278,9 +286,24 @@ class AdminUsersController extends RegisterConroller {
     } on CustomeException catch (e) {
       Get.toNamed("/error", arguments: {"message": e.toString()});
     } catch (e) {
-      print(e);
       Get.toNamed("/error",
           arguments: {"message": "something went wrong. try again later"});
     }
+  }
+
+  Future<List<PDetailModel?>> fetchMostPopularProducts() async {
+    try {
+      var res = await useCase.fetchMostPopularProducts();
+      mostPopularProducts(res);
+    } on BadResponseException catch (e) {
+      mostPopularProductsError({"status": e.statusCode, "message": e.message});
+    } on NetworkException catch (e) {
+      mostPopularProductsError({"status": "Network", "message": e.toString()});
+    } catch (e) {
+      print("errorR: $e");
+
+      mostPopularProductsError({"status": null, "message": "Unavailable"});
+    }
+    return [];
   }
 }
