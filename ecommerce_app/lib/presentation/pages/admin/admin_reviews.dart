@@ -26,7 +26,9 @@ class AdminReviews extends StatelessWidget {
           style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
         ),
       ),
-      body: Center(child: Obx(() => AllReviews(reviews: controller.recentReviews.value))),
+      body: Center(
+          child:
+              Obx(() => AllReviews(reviews: controller.recentReviews.value))),
     );
   }
 }
@@ -35,9 +37,21 @@ class AllReviews extends StatelessWidget {
   final List<ReviewModel> reviews;
 
   AllReviews({super.key, required this.reviews});
-
+  var controller = Get.find<AdminUsersController>();
   @override
   Widget build(BuildContext context) {
+    if (reviews.length == 0) {
+      if (controller.recentReviewsError.isNotEmpty) {
+        return Text(
+          "${controller.recentReviewsError['status']}: ${controller.recentReviewsError['message']}",
+          style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+        );
+      } else {
+        return Text("No review to show.",
+            style: TextStyle(color: Theme.of(context).colorScheme.onSecondary));
+      }
+    }
+
     return SingleChildScrollView(
       child: Wrap(
         spacing: 20,
@@ -45,10 +59,12 @@ class AllReviews extends StatelessWidget {
         children: [
           ...reviews.map(
             (e) => Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Theme.of(context).colorScheme.secondary,),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Theme.of(context).colorScheme.secondary,
+              ),
               padding: EdgeInsets.all(16),
               width: 400,
-              
               child: reviewWidget(
                 review: e,
               ),

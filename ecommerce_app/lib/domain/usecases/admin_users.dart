@@ -64,4 +64,12 @@ class AdminUserUseCase {
       rethrow;
     }
   }
+
+   Future<List<Product>> fetchOutOfStockProducts() async {
+    try {
+      return await repo.fetchOutOfStockProducts();
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

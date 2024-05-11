@@ -70,4 +70,12 @@ class AdminUserImp implements IAdminUsers {
       rethrow;
     }
   }
+
+  Future<List<Product>> fetchOutOfStockProducts() async {
+    try {
+      return await dataSource.fetchOutOfStockProducts();
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

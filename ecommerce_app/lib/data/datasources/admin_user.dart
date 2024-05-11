@@ -166,4 +166,28 @@ class AdminUserDataSource {
     }
     return [];
   }
+
+
+
+  Future<List<Product>> fetchOutOfStockProducts() async {
+    try {
+      var res = await dio.dio.get("/product");
+      if (res.statusCode == 200) {
+        // print("products: ${res.data['productDtos']}");
+        List? data = res.data['productDtos'];
+        // print("data: $data");
+        if (data != null) {
+          List<Product> reList = data.map((e) => Product.fromJson(e)).toList();
+          return reList;
+        }
+      }
+    } on DioException catch (e) {
+      print("here ? ? ?");
+      print(e);
+      handledioExceptions(e);
+    } catch (e) {
+      rethrow;
+    }
+    return [];
+  }
 }

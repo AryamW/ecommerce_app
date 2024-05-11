@@ -301,7 +301,8 @@ class backButton extends StatelessWidget {
           size: 40, // Adjust the size as needed
         ),
         onPressed: () {
-          print(nextPageName);
+          print("$nextPageName page");
+
           nextPageName != null ? Get.offNamed(nextPageName!) : Get.back();
         },
       ),

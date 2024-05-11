@@ -11,4 +11,5 @@ abstract class IAdminUsers {
   Future<RecentOrders?> fetchRecentOrders();
   Future<bool> delivered(int id, int status);
   Future<List<Product>> fetchMostPopularProducts();
+  Future<List<Product>> fetchOutOfStockProducts();
 }

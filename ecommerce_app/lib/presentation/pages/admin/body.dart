@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/presentation/controllers/admin_user.dart';
 import 'package:ecommerce_app/presentation/pages/admin/dashboard.dart';
 import 'package:ecommerce_app/presentation/pages/admin/view_users.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -10,13 +11,13 @@ class StoreBody extends StatelessWidget {
   var adminUserController = Get.put(AdminUsersController());
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      alignment: WrapAlignment.start,
-      children: [
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 20),
-          constraints: BoxConstraints(maxWidth: 600),
-          child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Wrap(
+        alignment: WrapAlignment.start,
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 0, vertical: 20),
+            constraints: BoxConstraints(maxWidth: 600),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -43,9 +44,9 @@ class StoreBody extends StatelessWidget {
               ],
             ),
           ),
-        ),
-        AdminDashBoard(),
-      ],
+          AdminDashBoard(),
+        ],
+      ),
     );
   }
 }

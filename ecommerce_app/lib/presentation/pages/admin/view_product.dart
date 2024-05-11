@@ -20,31 +20,35 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../../domain/entities/product.dart';
 
-
 import 'package:ecommerce_app/core/utils/category_enum.dart';
 import 'package:ecommerce_app/presentation/controllers/expansion_controller.dart';
 
 import 'edit_product.dart';
+
 class MyProducts extends StatelessWidget {
   const MyProducts({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final SearchProductsDataSource searchProductsDataSource =
+        SearchProductsDataSourceImpl();
+    final SearchProductsRepository searchProductsRepository =
+        SearchProductsRepositoryImpl(searchRepo: searchProductsDataSource);
+    final SearchProductsUseCase searchProductsUseCase =
+        SearchProductsUseCaseImpl(searchRepo: searchProductsRepository);
+    final AdminTableController controller =
+        Get.put(AdminTableController(searchProductsUseCase));
 
-
-final SearchProductsDataSource searchProductsDataSource = SearchProductsDataSourceImpl();
- final SearchProductsRepository searchProductsRepository = SearchProductsRepositoryImpl(searchRepo: searchProductsDataSource);
-final SearchProductsUseCase searchProductsUseCase = SearchProductsUseCaseImpl(searchRepo: searchProductsRepository);
-  final AdminTableController controller = Get.put(AdminTableController(searchProductsUseCase));
-
-  final List<Widget> filter = [
+    final List<Widget> filter = [
       IconButton(
-          onPressed: () {controller.searchWordController.clear();},
+          onPressed: () {
+            controller.searchWordController.clear();
+          },
           icon:
               Icon(Icons.clear, color: Theme.of(context).colorScheme.onPrimary))
     ];
     return AccessControlWidget(
-    allowedRole: Roles.ADMIN,
+      allowedRole: Roles.ADMIN,
       child: Scaffold(
         floatingActionButton: IconButton(
           onPressed: () {
@@ -62,7 +66,9 @@ final SearchProductsUseCase searchProductsUseCase = SearchProductsUseCaseImpl(se
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Row(
               children: [
                 Padding(
@@ -72,7 +78,10 @@ final SearchProductsUseCase searchProductsUseCase = SearchProductsUseCaseImpl(se
                           color: Theme.of(context).colorScheme.secondary,
                           shape: CircleBorder()),
                       child: IconButton(
-                        onPressed: () => {controller.searchWordController.clear(),Navigator.pop(context),},
+                        onPressed: () => {
+                          controller.searchWordController.clear(),
+                          Navigator.pop(context),
+                        },
                         icon: ImageIcon(
                           color: Theme.of(context).colorScheme.onSecondary,
                           AssetImage("lib/assets/images/arrowleft2.png"),
@@ -81,19 +90,22 @@ final SearchProductsUseCase searchProductsUseCase = SearchProductsUseCaseImpl(se
                 ),
                 SearchBar(
                   controller: controller.searchWordController,
-                  shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(100))),
-                  constraints: BoxConstraints(maxHeight: 40,maxWidth: MediaQuery.of(context).size.width*0.7),
-                  textStyle: MaterialStatePropertyAll(
-                      TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                  shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100))),
+                  constraints: BoxConstraints(
+                      maxHeight: 40,
+                      maxWidth: MediaQuery.of(context).size.width * 0.7),
+                  textStyle: MaterialStatePropertyAll(TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary)),
                   backgroundColor: MaterialStateColor.resolveWith(
                       (states) => Theme.of(context).colorScheme.secondary),
                   onSubmitted: (value) => ({
                     // controller.searchWord.value =value,
                     // controller.validateSearchWord(),
                     // if(controller.valid){
-                      controller.refresh()
-                      // },
-                    }),
+                    controller.refresh()
+                    // },
+                  }),
                   padding: const MaterialStatePropertyAll(
                     EdgeInsets.only(left: 30, right: 10),
                   ),
@@ -107,26 +119,36 @@ final SearchProductsUseCase searchProductsUseCase = SearchProductsUseCaseImpl(se
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             SizedBox(
               height: 40,
               child: ListView(
-                padding:  EdgeInsets.only(left: 20),
+                padding: EdgeInsets.only(left: 20),
                 scrollDirection: Axis.horizontal,
                 children: [
-                  Obx(() => FilterChip(
-                      label: Row( mainAxisSize: MainAxisSize.min,
-                        children: [Text("${controller.selectedFilters.length}"),
+                  Obx(
+                    () => FilterChip(
+                      label: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("${controller.selectedFilters.length}"),
                           Icon(Icons.filter_alt),
                         ],
                       ),
-                      onSelected: (value) { _showFilterBottomSheet(context);},
-                      selected: controller.selectedFilters.length>0,
+                      onSelected: (value) {
+                        _showFilterBottomSheet(context);
+                      },
+                      selected: controller.selectedFilters.length > 0,
                       // selectedColor:  Theme.of(context).colorScheme.tertiary ,
-                      color: MaterialStatePropertyAll(Theme.of(context).colorScheme.tertiary),
+                      color: MaterialStatePropertyAll(
+                          Theme.of(context).colorScheme.tertiary),
                     ),
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(
+                    width: 20,
+                  ),
                   SortButton(),
                 ],
               ),
@@ -135,7 +157,7 @@ final SearchProductsUseCase searchProductsUseCase = SearchProductsUseCaseImpl(se
               () => Padding(
                 padding: EdgeInsets.only(left: 20, bottom: 5, top: 10),
                 child: Text(
-                  "${controller.total.value} ${controller.total.value==1?'result':'results'} found",
+                  "${controller.total.value} ${controller.total.value == 1 ? 'result' : 'results'} found",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -148,26 +170,30 @@ final SearchProductsUseCase searchProductsUseCase = SearchProductsUseCaseImpl(se
         ),
       ),
     );
- }
+  }
 
- void _showFilterBottomSheet(BuildContext context) {
+  void _showFilterBottomSheet(BuildContext context) {
     showModalBottomSheet(
-      backgroundColor:Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       context: context,
       builder: (context) {
         return Container(
-          color: Theme.of(context).colorScheme.primary,
-          child: SingleChildScrollView(
-            child: categoryfilter(),
-        ));
+            color: Theme.of(context).colorScheme.primary,
+            child: SingleChildScrollView(
+              child: categoryfilter(),
+            ));
       },
     );
- }
+  }
 }
 
 class SortButton extends StatelessWidget {
   final title = "Sort by";
-  final values = ["None","Low-Hi", "Hi-Low",];
+  final values = [
+    "None",
+    "Low-Hi",
+    "Hi-Low",
+  ];
   final choices = [
     "None",
     "Price: Lowest - Highest",
@@ -220,10 +246,13 @@ class SortButton extends StatelessWidget {
                             shape: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(100),
                                 borderSide: BorderSide.none),
-                            title:Text(choices[index]),
+                            title: Text(choices[index]),
                             onTap: () {
-                                 Get.find<AdminTableController>().currentChoice.value = values[index];
-                                Get.find<AdminTableController>().setSortType(index);
+                              Get.find<AdminTableController>()
+                                  .currentChoice
+                                  .value = values[index];
+                              Get.find<AdminTableController>()
+                                  .setSortType(index);
                               Navigator.pop(context);
                             },
                           ),
@@ -246,10 +275,16 @@ class SortButton extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onPrimary,
                 fontWeight: FontWeight.bold),
           ),
-          SizedBox(width: 20,),
+          SizedBox(
+            width: 20,
+          ),
           Row(
             children: [
-              Obx(()=> Text(Get.find<AdminTableController>().currentChoice.value, style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),)),
+              Obx(() => Text(
+                    Get.find<AdminTableController>().currentChoice.value,
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary),
+                  )),
               SizedBox(
                 width: 10,
               ),
@@ -264,7 +299,6 @@ class SortButton extends StatelessWidget {
     );
   }
 }
-
 
 class categoryfilter extends StatelessWidget {
   const categoryfilter({
@@ -285,74 +319,78 @@ class categoryfilter extends StatelessWidget {
                 children: [
                   Text(
                     "Filters",
-                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary),
                   ),
                   Spacer(),
-                  ContinueButton(onPress: (){
-                  Get.find<AdminTableController>().refresh();
-                  }, child: Text(
-                            "Apply",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                          ),padding: 10,)
+                  ContinueButton(
+                    onPress: () {
+                      Get.find<AdminTableController>().refresh();
+                    },
+                    child: Text(
+                      "Apply",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    ),
+                    padding: 10,
+                  )
                 ],
               ),
             ),
-            
-                  Text(
-                    "Items per page",
-                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-                  ),
-                  SegmentedButton(
-                    segments: [
-                      ButtonSegment(
-                          value: "5",
-                          // icon: Icon(Icons.timer_10),
-                          label: Text(
-                            "5",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                          )),
-                      ButtonSegment(
-                          value: "10",
-                          // icon: Icon(Icons.timer_10),
-                          label: Text(
-                            "10",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                          )),
-                      ButtonSegment(
-                          value: "20",
-                          // icon: Icon(Icons.timer_10),
-                          label: Text(
-                            "20",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                          )),
-                      ButtonSegment(
-                          value: "50",
-                          // icon: Icon(Icons.timer_10),
-                          label: Text(
-                            "50",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                          )),
-                    ],
-                    selected: expController.pageSize,
-                    onSelectionChanged: (p0) =>
-                        Get.find<ExpansionController>().changeSize(p0),
-                    style: ButtonStyle(
-                        foregroundColor: MaterialStatePropertyAll(
-                            Theme.of(context).colorScheme.onPrimary),
-                        backgroundColor: MaterialStatePropertyAll(
-                            Theme.of(context).colorScheme.onSecondary),
-                        minimumSize: MaterialStatePropertyAll(Size(50, 50))),
-                  ),
+            Text(
+              "Items per page",
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+            ),
+            SegmentedButton(
+              segments: [
+                ButtonSegment(
+                    value: "5",
+                    // icon: Icon(Icons.timer_10),
+                    label: Text(
+                      "5",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    )),
+                ButtonSegment(
+                    value: "10",
+                    // icon: Icon(Icons.timer_10),
+                    label: Text(
+                      "10",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    )),
+                ButtonSegment(
+                    value: "20",
+                    // icon: Icon(Icons.timer_10),
+                    label: Text(
+                      "20",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    )),
+                ButtonSegment(
+                    value: "50",
+                    // icon: Icon(Icons.timer_10),
+                    label: Text(
+                      "50",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    )),
+              ],
+              selected: expController.pageSize,
+              onSelectionChanged: (p0) =>
+                  Get.find<ExpansionController>().changeSize(p0),
+              style: ButtonStyle(
+                  foregroundColor: MaterialStatePropertyAll(
+                      Theme.of(context).colorScheme.onPrimary),
+                  backgroundColor: MaterialStatePropertyAll(
+                      Theme.of(context).colorScheme.onSecondary),
+                  minimumSize: MaterialStatePropertyAll(Size(50, 50))),
+            ),
             ExpansionPanelList(
               expansionCallback: (panelIndex, isExpanded) => expController
                   .isOpen[panelIndex] = !expController.isOpen[panelIndex],
@@ -448,93 +486,202 @@ class categoryfilter extends StatelessWidget {
   }
 }
 
-
 class Results extends StatelessWidget {
   Results({super.key});
- final AdminTableController productController = Get.find<AdminTableController>();
- final ScrollController _scrollController = ScrollController();
+  final AdminTableController productController =
+      Get.find<AdminTableController>();
+  final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
-            print(productController.results.length);
+    print(productController.results.length);
     return RefreshIndicator(
       color: Theme.of(context).colorScheme.onPrimary,
       backgroundColor: Theme.of(context).colorScheme.secondary,
       onRefresh: () => Future.sync(() => productController.refresh()),
       child: Obx(
-        ()=> Stack(
-              children: [SingleChildScrollView(
-          controller: _scrollController,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Table(
-                // border: TableBorder.all(color: Theme.of(context).colorScheme.onPrimary,borderRadius: BorderRadius.circular(8)),
-                // border: TableBorder(horizontalInside: BorderSide(color: Theme.of(context).colorScheme.onPrimary,)),
-                children: [
-                  TableRow(children: [
-                    Text("No.",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),textAlign: TextAlign.center,),
-                    Text("name",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),textAlign: TextAlign.center,),
-                    Text("id",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),textAlign: TextAlign.center,),
-                    Text("price",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),textAlign: TextAlign.center,),
-                    Text("image",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),textAlign: TextAlign.center,),
-                    Text("",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),textAlign: TextAlign.center,),
-                  ]),
-                  ...productController.results.asMap().entries.map((e) {
-                    return TableRow(
-                      decoration: BoxDecoration(
-                        color: e.key.isEven?
-                        Theme.of(context).colorScheme.secondary
-                        :Theme.of(context).colorScheme.primary
-                        ,
+        () => Stack(
+          children: [
+            SingleChildScrollView(
+              controller: _scrollController,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Table(
+                  // border: TableBorder.all(color: Theme.of(context).colorScheme.onPrimary,borderRadius: BorderRadius.circular(8)),
+                  // border: TableBorder(horizontalInside: BorderSide(color: Theme.of(context).colorScheme.onPrimary,)),
+                  children: [
+                    TableRow(children: [
+                      Text(
+                        "No.",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary),
+                        textAlign: TextAlign.center,
                       ),
-                      children: [
-                      Text("${e.key+1}",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),textAlign: TextAlign.center,),
-                      Text(e.value.name.toString(),style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),textAlign: TextAlign.center,),
-                      Text(e.value.id.toString(),style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),textAlign: TextAlign.center,),
-                      Text(e.value.price.toString(),style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),textAlign: TextAlign.center,),
-                      e.value.imageUrl.isNotEmpty?Icon(Icons.check,color: Colors.green,):Icon(Icons.cancel_outlined,color: Colors.red,),
-                      // Text(e.value.imageUrl.isNotEmpty.toString(),style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),),
-                      IconButton(
-                        onPressed: () {
-                        print("${e.key}");
-                        Get.toNamed('/adminEditProducts', arguments: {'product':e.value});
-                      },
-                      icon: Icon(Icons.edit,color: Theme.of(context).colorScheme.onPrimary)),
-                    ]);
-                  }),
-                  TableRow(
-                    decoration: BoxDecoration(
-                    color:Theme.of(context).colorScheme.primary,
-                    ),
-                    children: [
-                    Text("",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),),
-                    Text("",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),),
-                    TextButton(
-                      onPressed: () {  if(productController.offset.value!=-1){print(productController.results.length);
-                                        productController.loadNextPage(); }
-                                        },
-                      child: Text("next",style: productController.offset.value!=-1? TextStyle(color: Theme.of(context).colorScheme.onPrimary): TextStyle(color: Theme.of(context).colorScheme.tertiary),),
-                      style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.secondary),
-                      ),),
-                    TextButton(
-                      onPressed: () {  print(productController.results.length);
-                                        productController.refresh(); 
-                                        },
-                      child: Text("refresh",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),),
-                      style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.secondary),
-                      ),),
-                    Text("",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),),
-                    Text("",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),),
-                  ]),
-                ],
-              
+                      Text(
+                        "name",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "id",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "price",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "image",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary),
+                        textAlign: TextAlign.center,
+                      ),
+                    ]),
+                    ...productController.results.asMap().entries.map((e) {
+                      return TableRow(
+                          decoration: BoxDecoration(
+                            color: e.key.isEven
+                                ? Theme.of(context).colorScheme.secondary
+                                : Theme.of(context).colorScheme.primary,
+                          ),
+                          children: [
+                            Text(
+                              "${e.key + 1}",
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary),
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              e.value.name.toString(),
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary),
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              e.value.id.toString(),
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary),
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              e.value.price.toString(),
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary),
+                              textAlign: TextAlign.center,
+                            ),
+                            e.value.imageUrl.isNotEmpty
+                                ? Icon(
+                                    Icons.check,
+                                    color: Colors.green,
+                                  )
+                                : Icon(
+                                    Icons.cancel_outlined,
+                                    color: Colors.red,
+                                  ),
+                            // Text(e.value.imageUrl.isNotEmpty.toString(),style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),),
+                            IconButton(
+                                onPressed: () {
+                                  print("${e.key}");
+                                  Get.toNamed('/adminEditProducts',
+                                      arguments: {'product': e.value});
+                                },
+                                icon: Icon(Icons.edit,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary)),
+                          ]);
+                    }),
+                    TableRow(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        children: [
+                          Text(
+                            "",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.onPrimary),
+                          ),
+                          Text(
+                            "",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.onPrimary),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              if (productController.offset.value != -1) {
+                                print(productController.results.length);
+                                productController.loadNextPage();
+                              }
+                            },
+                            child: Text(
+                              "next",
+                              style: productController.offset.value != -1
+                                  ? TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary)
+                                  : TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary),
+                            ),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                                  Theme.of(context).colorScheme.secondary),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              print(productController.results.length);
+                              productController.refresh();
+                            },
+                            child: Text(
+                              "refresh",
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary),
+                            ),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                                  Theme.of(context).colorScheme.secondary),
+                            ),
+                          ),
+                          Text(
+                            "",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.onPrimary),
+                          ),
+                          Text(
+                            "",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.onPrimary),
+                          ),
+                        ]),
+                  ],
+                ),
               ),
-          ),
-        ),
-               Positioned(
-                left: 10,
-                bottom: 0,
-                child: IconButton(
-                  style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.secondaryContainer)),
+            ),
+            Positioned(
+              left: 10,
+              bottom: 0,
+              child: IconButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(
+                        Theme.of(context).colorScheme.secondaryContainer)),
                 onPressed: () {
                   _scrollController.animateTo(
                     0.0,
@@ -543,10 +690,10 @@ class Results extends StatelessWidget {
                   );
                 },
                 icon: Icon(Icons.keyboard_arrow_up),
-                        ),
               ),
-              ],
             ),
+          ],
+        ),
       ),
     );
   }

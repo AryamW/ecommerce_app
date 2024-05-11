@@ -35,320 +35,335 @@ class DashBoard extends StatelessWidget {
     controller.fetchRecentOrders();
     controller.fetchRecentReviews();
     controller.fetchMostPopularProducts();
-    return Container(
-      padding: EdgeInsets.all(40),
-      child: Wrap(
-        direction: Axis.horizontal,
-        spacing: 10,
-        alignment: WrapAlignment.start,
-        runAlignment: WrapAlignment.start,
-        children: [
-          Container(
-            width: 350,
-            child: Card(
-              color: Theme.of(context).colorScheme.secondary,
-              child: Container(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      child: Wrap(
-                        alignment: WrapAlignment.spaceBetween,
-                        runAlignment: WrapAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Recent Reviews",
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.onPrimary),
+    controller.fetchOutOfStockProducts();
+    return SingleChildScrollView(
+      // Wrap your content in a SingleChildScrollView
+     
+         child: Wrap(
+            spacing: 10,
+            runSpacing: 10,
+            alignment: WrapAlignment.start,
+            runAlignment: WrapAlignment.start,
+            children: [
+              Container(
+                width: 350,
+                child: Card(
+                  color: Theme.of(context).colorScheme.secondary,
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          child: Wrap(
+                            alignment: WrapAlignment.spaceBetween,
+                            runAlignment: WrapAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Recent Reviews",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed("/admin-recent-reviews");
+                                },
+                                child: Text(
+                                  "View All",
+                                  style: TextStyle(color: Colors.orange),
+                                ),
+                              )
+                            ],
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.toNamed("/admin-recent-reviews");
-                            },
-                            child: Text(
-                              "View All",
-                              style: TextStyle(color: Colors.orange),
-                            ),
-                          )
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Obx(() {
+                          if (controller.recentReviews.value.isEmpty &&
+                              controller.recentReviewsError.isEmpty) {
+                            return Center(
+                              child: Text("No reviews.",
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary)),
+                            );
+                          } else if (controller.recentReviewsError.isNotEmpty) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    "ErrCode: ${controller.recentReviewsError['status']}",
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary)),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Text(controller.recentReviewsError['message'],
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary)),
+                              ],
+                            );
+                          } else {
+                            return reviewWidget(
+                                review: controller.recentReviews.value[0]);
+                          }
+                        })
+                      ],
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Obx(() {
-                      if (controller.recentReviews.value.isEmpty &&
-                          controller.recentReviewsError.isEmpty) {
-                        return Center(
-                          child: Text("No reviews.",
-                              style: TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSecondary)),
-                        );
-                      } else if (controller.recentReviewsError.isNotEmpty) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                                "ErrCode: ${controller.recentReviewsError['status']}",
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary)),
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Text(controller.recentReviewsError['message'],
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary)),
-                          ],
-                        );
-                      } else {
-                        return reviewWidget(
-                            review: controller.recentReviews.value[0]);
-                      }
-                    })
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-          Container(
-            width: 350,
-            child: Card(
-              color: Theme.of(context).colorScheme.secondary,
-              child: Container(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      child: Wrap(
-                        alignment: WrapAlignment.spaceBetween,
-                        runAlignment: WrapAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Recent Orders",
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.onPrimary),
+              Container(
+                width: 350,
+                child: Card(
+                  color: Theme.of(context).colorScheme.secondary,
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          child: Wrap(
+                            alignment: WrapAlignment.spaceBetween,
+                            runAlignment: WrapAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Recent Orders",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed("/admin-recent-orders");
+                                },
+                                child: Text(
+                                  "View All",
+                                  style: TextStyle(color: Colors.orange),
+                                ),
+                              ),
+                            ],
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.toNamed("/admin-recent-orders");
-                            },
-                            child: Text(
-                              "View All",
-                              style: TextStyle(color: Colors.orange),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                        Obx(() {
+                          if (controller.recentOrders.value.isEmpty &&
+                              controller.recentOrdersError.isEmpty) {
+                            return Center(
+                              child: Text("No Orders.",
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary)),
+                            );
+                          } else if (controller.recentOrdersError.isNotEmpty) {
+                            // return Text(controller.recentOrdersError.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSecondary));
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    "ErrCode: ${controller.recentOrdersError['status']}",
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary)),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Text(controller.recentOrdersError['message'],
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary)),
+                              ],
+                            );
+                          } else {
+                            return ordersWidget(
+                              count: controller.monthlyOrder.value,
+                              order: controller.recentOrders.value[0],
+                            );
+                          }
+                        })
+                      ],
                     ),
-                    Obx(() {
-                      if (controller.recentOrders.value.isEmpty &&
-                          controller.recentOrdersError.isEmpty) {
-                        return Center(
-                          child: Text("No Orders.",
-                              style: TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSecondary)),
-                        );
-                      } else if (controller.recentOrdersError.isNotEmpty) {
-                        // return Text(controller.recentOrdersError.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSecondary));
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                                "ErrCode: ${controller.recentOrdersError['status']}",
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary)),
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Text(controller.recentOrdersError['message'],
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary)),
-                          ],
-                        );
-                      } else {
-                        return ordersWidget(
-                          count: controller.monthlyOrder.value,
-                          order: controller.recentOrders.value[0],
-                        );
-                      }
-                    })
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-          Container(
-            width: 350,
-            child: Card(
-              color: Theme.of(context).colorScheme.secondary,
-              child: Container(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      child: Wrap(
-                        alignment: WrapAlignment.spaceBetween,
-                        runAlignment: WrapAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Most Popular Products",
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.onPrimary),
+              Container(
+                width: 350,
+                child: Card(
+                  color: Theme.of(context).colorScheme.secondary,
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          child: Wrap(
+                            alignment: WrapAlignment.spaceBetween,
+                            runAlignment: WrapAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Most Popular Products",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed("/admin-most-products");
+                                },
+                                child: Text(
+                                  "View All",
+                                  style: TextStyle(color: Colors.orange),
+                                ),
+                              ),
+                            ],
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.toNamed("/admin-most-products");
-                            },
-                            child: Text(
-                              "View All",
-                              style: TextStyle(color: Colors.orange),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                        Obx(() {
+                          if (controller.mostPopularProducts.value.isEmpty &&
+                              controller.mostPopularProductsError.isEmpty) {
+                            return Center(
+                              child: Text("No Product.",
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary)),
+                            );
+                          } else if (controller
+                              .mostPopularProductsError.isNotEmpty) {
+                            // return Text(controller.mostPopularProductsError.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSecondary));
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    "ErrCode: ${controller.mostPopularProductsError['status']}",
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary)),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Text(
+                                    controller
+                                        .mostPopularProductsError['message'],
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary)),
+                              ],
+                            );
+                          } else {
+                            return TopProductsWidget(
+                              count: controller.topProductNumber.value,
+                              product: controller.mostPopularProducts.value[0],
+                              title: "Most Popular \nProducts in this Month",
+                            );
+                          }
+                        })
+                      ],
                     ),
-                    Obx(() {
-                      if (controller.mostPopularProducts.value.isEmpty &&
-                          controller.mostPopularProductsError.isEmpty) {
-                        return Center(
-                          child: Text("No Product.",
-                              style: TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSecondary)),
-                        );
-                      } else if (controller
-                          .mostPopularProductsError.isNotEmpty) {
-                        // return Text(controller.mostPopularProductsError.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSecondary));
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                                "ErrCode: ${controller.mostPopularProductsError['status']}",
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary)),
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Text(controller.mostPopularProductsError['message'],
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary)),
-                          ],
-                        );
-                      } else {
-                        return TopProductsWidget(
-                          count: controller.topProductNumber.value,
-                          product: controller.mostPopularProducts.value[0],
-                          title: "Most Popular \nProducts in this Month",
-                        );
-                      }
-                    })
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-          Container(
-            width: 350,
-            child: Card(
-              color: Theme.of(context).colorScheme.secondary,
-              child: Container(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      child: Wrap(
-                        alignment: WrapAlignment.spaceBetween,
-                        runAlignment: WrapAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Out of Stock Products",
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.onPrimary),
+              Container(
+                width: 350,
+                child: Card(
+                  color: Theme.of(context).colorScheme.secondary,
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          child: Wrap(
+                            alignment: WrapAlignment.spaceBetween,
+                            runAlignment: WrapAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Out of Stock Products",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed("/admin-out-of-stock");
+                                },
+                                child: Text(
+                                  "View All",
+                                  style: TextStyle(color: Colors.orange),
+                                ),
+                              ),
+                            ],
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.toNamed("/admin-out-of-stock");
-                            },
-                            child: Text(
-                              "View All",
-                              style: TextStyle(color: Colors.orange),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                        Obx(() {
+                          if (controller.outOfStockProducts.value.isEmpty &&
+                              controller.outOfStockProductsError.isEmpty) {
+                            return Center(
+                              child: Text("No Product out of stock.",
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary)),
+                            );
+                          } else if (controller
+                              .outOfStockProductsError.isNotEmpty) {
+                            // return Text(controller.outOfStockProductsError.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSecondary));
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    "ErrCode: ${controller.outOfStockProductsError['status']}",
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary)),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Text(
+                                    controller
+                                        .outOfStockProductsError['message'],
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary)),
+                              ],
+                            );
+                          } else {
+                            return TopProductsWidget(
+                              count: controller.outOfStockNumber.value,
+                              product: controller.outOfStockProducts.value[0],
+                              title: "Out of Stock Products",
+                            );
+                          }
+                        })
+                      ],
                     ),
-                    Obx(() {
-                      if (controller.outOfStockProducts.value.isEmpty &&
-                          controller.outOfStockProductsError.isEmpty) {
-                        return Center(
-                          child: Text("No Product out of stock.",
-                              style: TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSecondary)),
-                        );
-                      } else if (controller
-                          .outOfStockProductsError.isNotEmpty) {
-                        // return Text(controller.outOfStockProductsError.toString(), style: TextStyle(color: Theme.of(context).colorScheme.onSecondary));
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                                "ErrCode: ${controller.outOfStockProductsError['status']}",
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary)),
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Text(controller.outOfStockProductsError['message'],
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary)),
-                          ],
-                        );
-                      } else {
-                        return TopProductsWidget(
-                          count: controller.outOfStockNumber.value,
-                          product: controller.outOfStockProducts.value[0],
-                          title: "Out of Stock Products",
-                        );
-                      }
-                    })
-                  ],
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        
     );
   }
 }
@@ -383,7 +398,7 @@ class TopProductsWidget extends StatelessWidget {
               width: 10,
             ),
             Text(
-              "Most Popular \nProducts in this Month",
+              title,
               style: TextStyle(
                   color: Theme.of(context).colorScheme.onSecondary,
                   fontSize: 12),
@@ -626,51 +641,3 @@ class reviewWidget extends StatelessWidget {
     );
   }
 }
-
-
-
-
-/*
-var children = [
-      Container(
-        width: 200,
-        height: 300,
-        color: Colors.red,
-      ),
-      Container(
-        width: 300,
-        height: 200,
-        color: Colors.red,
-      ),
-      Container(
-        width: 200,
-        height: 300,
-        color: Colors.red,
-      ),
-      Container(
-        width: 400,
-        height: 100,
-        color: Colors.red,
-      ),
-      Container(
-        width: 200,
-        height: 300,
-        color: Colors.red,
-      ),
-      Container(
-        width: 140,
-        height: 500,
-        color: Colors.red,
-      ),
-      Container(
-        width: 200,
-        height: 300,
-        color: Colors.red,
-      ),
-      Container(
-        width: 200,
-        height: 300,
-        color: Colors.red,
-      ),
-    ];
- */

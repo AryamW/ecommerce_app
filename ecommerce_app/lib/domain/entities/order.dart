@@ -1,5 +1,4 @@
 import 'package:ecommerce_app/domain/entities/edit_user.dart';
-import 'package:ecommerce_app/domain/entities/product.dart';
 
 class Order {
   final GetUserModel? user;
@@ -126,7 +125,6 @@ class PaymentInfo {
        this.updatedAt});
 
   factory PaymentInfo.fromJson(Map<String, dynamic> json) {
-    print("payment info json: $json");
     return PaymentInfo(
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),

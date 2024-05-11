@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/presentation/pages/ErrorPage.dart';
 import 'package:ecommerce_app/presentation/pages/admin/admin_orders.dart';
+import 'package:ecommerce_app/presentation/pages/admin/admin_products.dart';
 import 'package:ecommerce_app/presentation/pages/admin/admin_reviews.dart';
 import 'package:ecommerce_app/presentation/pages/admin/create_staff.dart';
 import 'package:ecommerce_app/presentation/pages/admin/edit_product.dart';
@@ -33,6 +34,8 @@ final routes = [
   GetPage(name: "/add-staff", page: () => RegisterAdminPage()),
   GetPage(name: "/admin-recent-reviews", page: () => AdminReviews()),
   GetPage(name: "/admin-recent-orders", page: () => AdminOrders()),
+  GetPage(name: "/admin-most-products", page: () => MostProductsEntry()),
+  GetPage(name: "/admin-out-of-stock", page: () => OutOfStockProductEntry()),
 // admin
 
   GetPage(name: "/home", page: () => EntryPage()),

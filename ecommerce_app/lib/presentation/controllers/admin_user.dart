@@ -306,4 +306,21 @@ class AdminUsersController extends RegisterConroller {
     }
     return [];
   }
+
+  Future<List<PDetailModel?>> fetchOutOfStockProducts() async {
+    try {
+      var res = await useCase.fetchOutOfStockProducts();
+      outOfStockProducts(res);
+      outOfStockNumber(res.length);
+    } on BadResponseException catch (e) {
+      outOfStockProductsError({"status": e.statusCode, "message": e.message});
+    } on NetworkException catch (e) {
+      outOfStockProductsError({"status": "Network", "message": e.toString()});
+    } catch (e) {
+      print("errorR: $e");
+
+      outOfStockProductsError({"status": null, "message": "Unavailable"});
+    }
+    return [];
+  }
 }

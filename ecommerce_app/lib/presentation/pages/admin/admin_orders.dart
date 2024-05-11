@@ -22,7 +22,7 @@ class AdminOrders extends StatelessWidget {
           style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
         ),
       ),
-      body: Obx(() => AllOrders(orders: controller.recentOrders.value)),
+      body: Obx(() => Center(child: AllOrders(orders: controller.recentOrders.value))),
     );
   }
 }
@@ -31,9 +31,20 @@ class AllOrders extends StatelessWidget {
   final List<Order> orders;
 
   AllOrders({super.key, required this.orders});
-
+  var controller = Get.find<AdminUsersController>();
   @override
   Widget build(BuildContext context) {
+    if (orders.length == 0) {
+      if (controller.recentOrdersError.isNotEmpty) {
+        return Text(
+          "${controller.recentOrdersError['status']}: ${controller.recentOrdersError['message']}",
+          style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+        );
+      } else {
+        return Text("No Order to show.",
+            style: TextStyle(color: Theme.of(context).colorScheme.onSecondary));
+      }
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20),
       child: ListView.builder(
@@ -46,7 +57,6 @@ class AllOrders extends StatelessWidget {
                 },
                 child: SingleOrderItem(order: order));
           },
-          
           itemCount: orders.length),
     );
   }
@@ -68,7 +78,7 @@ class SingleOrderItem extends StatelessWidget {
     } else {
       width = screen;
     }
-    var statuses = [null,"Pending", "Shipped", "Delivered"];
+    var statuses = [null, "Pending", "Shipped", "Delivered"];
     // print("screen: $screen, maxw: $maxwidth, width: $width");
     return Container(
       alignment: Alignment.center,
@@ -129,7 +139,7 @@ class SingleOrderItem extends StatelessWidget {
                                         .onPrimary),
                               ),
                               content: Text(
-                                'Are you sure you want to mark this order as ${statuses[order.status+1]}?\n This is an irreversible action.',
+                                'Are you sure you want to mark this order as ${statuses[order.status + 1]}?\n This is an irreversible action.',
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -153,7 +163,10 @@ class SingleOrderItem extends StatelessWidget {
                                     onPressed: () {
                                       Navigator.of(context)
                                           .pop(); // Close the dialog
-                                    Get.find<AdminUsersController>().delivered(order.orderId, order.status + 1); // Proceed with the function
+                                      Get.find<AdminUsersController>().delivered(
+                                          order.orderId,
+                                          order.status +
+                                              1); // Proceed with the function
                                     },
                                     child: Text(
                                       'Yes',
@@ -166,7 +179,10 @@ class SingleOrderItem extends StatelessWidget {
                           },
                         );
                       },
-                      child: Text("${statuses[order.status + 1]}", style: TextStyle(color: Colors.black87),),
+                      child: Text(
+                        "${statuses[order.status + 1]}",
+                        style: TextStyle(color: Colors.black87),
+                      ),
                     )
                 ],
               ),
