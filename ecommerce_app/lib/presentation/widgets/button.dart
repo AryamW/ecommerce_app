@@ -1,15 +1,18 @@
+import "package:ecommerce_app/presentation/controllers/auth.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 
 class ContinueButton extends StatelessWidget {
   final Function onPress;
+  final LoadingController? getController;
   final Widget child;
   final double padding;
   const ContinueButton(
       {super.key,
       required this.onPress,
       required this.child,
-      this.padding = 20});
+      this.padding = 20,
+      this.getController});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +23,29 @@ class ContinueButton extends StatelessWidget {
           backgroundColor: MaterialStateProperty.all<Color>(
               Theme.of(context).colorScheme.tertiary),
         ),
-        onPressed: () => onPress(),
-        child: child);
+        onPressed: (){
+          getController?.changeIsLoading(true);
+          onPress().then((_) => getController?.changeIsLoading(false));
+          // getController?.changeIsLoading(false);
+        },
+        child: getController != null
+            ? Obx(() {
+                return getController!.isLoading.value == true
+                    ? loadingWidget()
+                    : child;
+              })
+            : child);
+  }
+}
+
+class loadingWidget extends StatelessWidget {
+  const loadingWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const CircularProgressIndicator(
+      color: Colors.white,
+    );
   }
 }
 

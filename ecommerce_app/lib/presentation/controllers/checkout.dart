@@ -4,12 +4,13 @@ import 'package:ecommerce_app/data/repositories/checkout.dart';
 import 'package:ecommerce_app/domain/entities/cart.dart';
 import 'package:ecommerce_app/domain/entities/checkout.dart';
 import 'package:ecommerce_app/domain/usecases/checkout.dart';
+import 'package:ecommerce_app/presentation/controllers/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class CheckoutController extends GetxController {
+class CheckoutController extends LoadingController {
   final txref = RxnString(null);
   final checkoutUrl = RxnString(null);
   final shippingAddress = RxnInt(null);
@@ -118,7 +119,7 @@ class CheckoutController extends GetxController {
     }
   }
 
-  void verify() async {
+  Future<void> verify() async {
     try {
       var res = await useCase.verify(
           {"txRef": txref.value!, "shippingAddressId": shippingAddress.value!});

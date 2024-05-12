@@ -60,7 +60,10 @@ class addCheckoutBody extends StatelessWidget {
                       builder: (controller) {
                         // return Text("kjdfaklj");
                         return DropdownMenu(
-                          textStyle: TextStyle(backgroundColor: Theme.of(context).colorScheme.secondary, color: Theme.of(context).colorScheme.onPrimary),
+                          textStyle: TextStyle(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.secondary,
+                              color: Theme.of(context).colorScheme.onPrimary),
                           onSelected: (value) {
                             controller.shippingAddress(value);
                           },
@@ -81,8 +84,17 @@ class addCheckoutBody extends StatelessWidget {
                       height: 30,
                     ),
                     ContinueButton(
-                        onPress: () {
-                          Get.find<CheckoutController>().verify();
+                        getController: Get.find<CheckoutController>(),
+                        onPress: () async {
+                          if (Get.find<CheckoutController>()
+                                  .shippingAddress
+                                  .value ==
+                              null) {
+                            Get.find<CheckoutController>()
+                                .changeIsLoading(false);
+                          }
+                          await Get.find<CheckoutController>().verify();
+                          return true;
                         },
                         child: Text(
                           "Verify Your Payment",

@@ -140,7 +140,7 @@ class RegisterPage extends StatelessWidget {
                             obscure: true,
                             palceholder: "Confirm Password",
                           )),
-      
+
                           const SizedBox(
                             height: 15,
                           ),
@@ -155,16 +155,21 @@ class RegisterPage extends StatelessWidget {
                           //   child:
                           // ),
                           ContinueButton(
-                            onPress: () {
+                            getController: registerConroller,
+                            onPress: () async {
                               if (_formKey.currentState!.validate()) {
-                                registerConroller.submitForm();
+                                await registerConroller.submitForm();
                                 // Proceed with form submission
                                 // Get.toNamed("/home");
+                              } else {
+                                registerConroller.changeIsLoading(false);
                               }
+                              return true;
                             },
                             child: const Text(
                               "Continue",
-                              style: TextStyle(color: Colors.white, fontSize: 16),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
                             ),
                           ),
                           const SizedBox(
@@ -175,8 +180,9 @@ class RegisterPage extends StatelessWidget {
                               Text(
                                 "Have an Account?",
                                 style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.onPrimary),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary),
                               ),
                               const SizedBox(
                                 width: 5,

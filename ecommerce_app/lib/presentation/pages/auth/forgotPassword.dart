@@ -67,11 +67,15 @@ class ForgotPassword extends StatelessWidget {
                           height: 15,
                         ),
                         ContinueButton(
-                          onPress: () {
+                          getController: forgotPasswordController,
+                          onPress: () async {
                             if (_formKey.currentState!.validate()) {
                               // Proceed with form submission
-                              forgotPasswordController.initiate();
+                              await forgotPasswordController.initiate();
+                            } else {
+                              forgotPasswordController.changeIsLoading(false);
                             }
+                            return true;
                           },
                           child: Text(
                             "Continue",
@@ -166,12 +170,16 @@ class EmailSent extends StatelessWidget {
                       height: 15,
                     ),
                     ContinueButton(
-                      onPress: () {
+                      getController: forgotController,
+                      onPress: () async {
                         if (_formKey.currentState!.validate()) {
                           // Proceed with form submission
                           print("herere /");
-                          forgotController.submit();
+                          await forgotController.submit();
+                        } else {
+                          forgotController.changeIsLoading(false);
                         }
+                        return true;
                       },
                       child: Text(
                         "Continue",

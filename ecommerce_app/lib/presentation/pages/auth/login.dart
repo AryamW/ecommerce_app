@@ -106,12 +106,16 @@ class LoginPage extends StatelessWidget {
                           height: 15,
                         ),
                         ContinueButton(
-                          onPress: () {
+                          getController: loginController,
+                          onPress: () async {
                             if (_formKey.currentState!.validate()) {
-                              loginController.submitForm();
+                              await loginController.submitForm();
 
                               // Proceed with form submission
+                            } else {
+                              loginController.changeIsLoading(false);
                             }
+                            return true;
                           },
                           child: Text(
                             "Continue",

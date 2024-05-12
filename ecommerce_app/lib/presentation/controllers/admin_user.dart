@@ -30,7 +30,7 @@ class AdminUsersController extends RegisterConroller {
 
   final filterUsers = Rx<List<GetUserModel>>([]);
   final currentPage = 0.obs;
-  final rowsPerPage = 10.obs;
+  final rowsPerPage = 20.obs;
   final currentPageUsers = Rx<List<GetUserModel>>([]);
 
   final mostPopularProducts = Rx<List<Product>>([]);
@@ -143,7 +143,7 @@ class AdminUsersController extends RegisterConroller {
   }
 
   @override
-  void submitForm() async {
+  Future<void> submitForm() async {
     print("ere?");
     validateEmail();
     validatePassword();
@@ -195,6 +195,8 @@ class AdminUsersController extends RegisterConroller {
     } catch (e) {
       Get.toNamed("/error", arguments: {"message": "Something went wrong"});
     }
+
+    
   }
 
   Future<List<ReviewModel>> fetchRecentReviews() async {
@@ -237,7 +239,7 @@ class AdminUsersController extends RegisterConroller {
     return null;
   }
 
-  void delivered(int id, int status) async {
+  Future<void> delivered(int id, int status) async {
     try {
       var res = await useCase.delivered(id, status);
       // recentOrders.refresh();

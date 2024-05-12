@@ -13,135 +13,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
-// to be moved to product controller file.offAllNamed("/register", arguments: {"message": e.toString()});
-/*
-class PDetailController extends GetxController {
-  final rating = RxnInt(null);
-  TextEditingController reviewController = TextEditingController();
-  RxBool valid = false.obs;
-  void changeRating(value) {
-    rating(value);
-  }
+abstract class LoadingController extends GetxController {
+  RxBool isLoading = false.obs;
 
-  void validateReview() {
-    if (rating.value != null && reviewController.text.isNotEmpty) {
-      valid.value = true;
-    } else {
-      valid.value = false;
-    }
-    ;
-  }
-
-  void submitForm(int pid) async {
-    validateReview();
-    if (valid.value == true) {
-      try {
-        var use = ReviewUseCase(
-            repo: ReviewRepositoryImp(reviewSource: ReviewDataSource()));
-        var res = await use.send(
-            ReviewModel(
-                review: reviewController.text,
-                rating: rating.value!,
-                isMine: true),
-            pid);
-        Get.offAndToNamed("/productDetail", arguments: {"id": pid});
-
-        changeRating(0);
-        reviewController.text = "";
-      } on CustomeException catch (e) {
-        Get.offAllNamed("/error", arguments: {"message": e.toString()});
-      } on BadResponseException catch (e) {
-        if (e.statusCode == 500) {
-          Get.toNamed("/error", arguments: {
-            "message":
-                "An error has Occured on the server side. please try later."
-          });
-        } else if (e.statusCode == 400) {
-          Get.toNamed("/error",
-              arguments: {"message": "Invalid Request Format."});
-        } else {
-          Get.toNamed("/error",
-              arguments: {"message": "Something went wrong p"});
-        }
-      } on NetworkException catch (e) {
-        Get.toNamed("/error", arguments: {
-          "message": "Network Error: ${e.toString()}",
-          "backDest": "/home"
-        });
-      } catch (e) {
-        Get.toNamed("/error", arguments: {"message": "login is needed"});
-        Future.delayed(const Duration(seconds: 2), () => Get.toNamed("/login"));
-        // Get.toNamed("/login");
-      }
-    }
-    // submit the reviews using a use case.
-  }
-
-  Future<PDetailModel?> retrieveProduct(int id) async {
-    PDetailModel? a;
-    try {
-      var usePd = PDetailUseCase(
-          repo: PDetailRepositoryImp(dataSource: PDetailDataSource()));
-      a = await usePd.fetch(id);
-
-      var useR = ReviewUseCase(
-          repo: ReviewRepositoryImp(reviewSource: ReviewDataSource()));
-      var reviews = await useR.fetch(a!.id);
-      a.reviews = reviews;
-      // removable if image provided from the server.
-      if (a.images!.isEmpty) {
-        a.images!
-            .add("https://red-ecommerce.onrender.com/images/DefaultImage.jpg");
-      }
-      return a;
-    } on CustomeException catch (e) {
-      Get.toNamed("/error", arguments: {"message": e.toString()});
-    } on BadResponseException catch (e) {
-      if (e.statusCode == 500) {
-        Get.offNamed("/error", arguments: {
-          "message":
-              "An Error has occured on the server side. please try again later."
-        });
-      } else if (e.statusCode == 404 && e.path == "/products/$id") {
-        Get.offNamed("/home");
-        Get.snackbar(isDismissible: true,
-                duration: Duration(seconds: 10),
-                backgroundColor: ThemeData.dark().colorScheme.secondary,
-                colorText: ThemeData.dark().colorScheme.onPrimary,"NotFound", "Product is not found.");
-      } else if (e.path != "/product/$id") {
-        return a;
-      }
-    } on NetworkException catch (e) {
-      Get.toNamed("/error",
-          arguments: {"messsage": e.toString(), "backDest": "/home"});
-    } catch (e) {
-      return a;
-    }
-    return null;
-  }
-
-  Future<bool> delete(int pid) async {
-    try {
-      var useR = ReviewUseCase(
-          repo: ReviewRepositoryImp(reviewSource: ReviewDataSource()));
-      return await useR.delete(pid);
-    } on BadResponseException catch (e) {
-      if (e.statusCode == 404) {
-        Get.toNamed("/error", arguments: {
-          "message": "This review doesn't exist. please refresh your page."
-        });
-      } else if (e.statusCode == 401 && e.path != '/auth/refresh') {
-        Get.snackbar(isDismissible: true,
-                duration: Duration(seconds: 10),
-                backgroundColor: ThemeData.dark().colorScheme.secondary,
-                colorText: ThemeData.dark().colorScheme.onPrimary,"Unauthorised", e.toString());
-      }
-      return false;
-    }
+  void changeIsLoading(bool value) {
+    print("to $value");
+    isLoading.value = value;
   }
 }
-*/
-class LoginController extends GetxController {
+
+class LoginController extends LoadingController {
   DioClient dio = DioClient();
   final email = "".obs;
   final password = "".obs;
@@ -166,7 +47,7 @@ class LoginController extends GetxController {
     }
   }
 
-  void submitForm() async {
+  Future<void> submitForm() async {
     validateEmail();
     validatePassword();
     try {
@@ -229,16 +110,11 @@ class RegisterConroller extends LoginController {
   RxnString confirmError = RxnString(null);
 
   void validateFirstName() {
-    
-      firstNameError.value = null;
-  
+    firstNameError.value = null;
   }
 
   void validateLastName() {
-   
-   
-      lastNameError.value = null;
-    
+    lastNameError.value = null;
   }
 
   void validateConfirm() {
@@ -249,7 +125,7 @@ class RegisterConroller extends LoginController {
     }
   }
 
-  void submitForm() async {
+  Future<void> submitForm() async {
     validateEmail();
     validatePassword();
     validateFirstName();
@@ -306,7 +182,7 @@ class RegisterConroller extends LoginController {
   TextEditingController confirmController = TextEditingController();
 }
 
-class LogoutController extends GetxController {
+class LogoutController extends LoadingController {
   Future<void> logout() async {
     try {
       var use = AuthUserCase(
@@ -335,7 +211,7 @@ class LogoutController extends GetxController {
   }
 }
 
-class ForgotPasswordController extends GetxController {
+class ForgotPasswordController extends LoadingController {
   /*
   final email = "".obs;
   final password = "".obs;
@@ -391,7 +267,7 @@ class ForgotPasswordController extends GetxController {
     }
   }
 
-  void initiate() async {
+  Future<void> initiate() async {
     validateEmail(emailController.text);
     try {
       if (emailError.value == null) {
@@ -424,7 +300,7 @@ class ForgotPasswordController extends GetxController {
     emailController.text = '';
   }
 
-  void submit() async {
+  Future<void> submit() async {
     print("ere?");
     print(
         'email: ${email.value}, token: ${token.value}, pass: ${newPasswordController.text}, con: ${confirmNewPasswordController.text}');

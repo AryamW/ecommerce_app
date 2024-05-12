@@ -144,10 +144,14 @@ class RegisterAdminPage extends StatelessWidget {
                             height: 15,
                           ),
                           ContinueButton(
-                            onPress: () {
+                            getController: registerController,
+                            onPress: () async {
                               if (_formKey.currentState!.validate()) {
-                                registerController.submitForm();
+                                await registerController.submitForm();
+                              } else {
+                                registerController.changeIsLoading(false);
                               }
+                              return true;
                             },
                             child: const Text(
                               "Continue",

@@ -189,7 +189,7 @@ class AdminProductCard extends StatelessWidget {
               padding:
                   const EdgeInsets.symmetric(vertical: 10 / 4, horizontal: 10),
               child: Text(
-                "${product.name}",
+                product.name,
                 maxLines: 2,
                 style:
                     TextStyle(color: Theme.of(context).colorScheme.onPrimary),

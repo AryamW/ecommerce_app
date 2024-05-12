@@ -24,74 +24,78 @@ class categoryfilter extends StatelessWidget {
                 children: [
                   Text(
                     "Filters",
-                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary),
                   ),
                   Spacer(),
-                  ContinueButton(onPress: (){
-                  Get.find<SearchPageController>().refresh();
-                  }, child: Text(
-                            "Apply",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                          ),padding: 10,)
+                  ContinueButton(
+                    onPress: () {
+                      Get.find<SearchPageController>().refresh();
+                    },
+                    child: Text(
+                      "Apply",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    ),
+                    padding: 10,
+                  )
                 ],
               ),
             ),
-            
-                  Text(
-                    "Items per page",
-                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-                  ),
-                  SegmentedButton(
-                    segments: [
-                      ButtonSegment(
-                          value: "5",
-                          // icon: Icon(Icons.timer_10),
-                          label: Text(
-                            "5",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                          )),
-                      ButtonSegment(
-                          value: "10",
-                          // icon: Icon(Icons.timer_10),
-                          label: Text(
-                            "10",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                          )),
-                      ButtonSegment(
-                          value: "20",
-                          // icon: Icon(Icons.timer_10),
-                          label: Text(
-                            "20",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                          )),
-                      ButtonSegment(
-                          value: "50",
-                          // icon: Icon(Icons.timer_10),
-                          label: Text(
-                            "50",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                          )),
-                    ],
-                    selected: expController.pageSize,
-                    onSelectionChanged: (p0) =>
-                        Get.find<ExpansionController>().changeSize(p0),
-                    style: ButtonStyle(
-                        foregroundColor: MaterialStatePropertyAll(
-                            Theme.of(context).colorScheme.onPrimary),
-                        backgroundColor: MaterialStatePropertyAll(
-                            Theme.of(context).colorScheme.onSecondary),
-                        minimumSize: MaterialStatePropertyAll(Size(50, 50))),
-                  ),
+            Text(
+              "Items per page",
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+            ),
+            SegmentedButton(
+              segments: [
+                ButtonSegment(
+                    value: "5",
+                    // icon: Icon(Icons.timer_10),
+                    label: Text(
+                      "5",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    )),
+                ButtonSegment(
+                    value: "10",
+                    // icon: Icon(Icons.timer_10),
+                    label: Text(
+                      "10",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    )),
+                ButtonSegment(
+                    value: "20",
+                    // icon: Icon(Icons.timer_10),
+                    label: Text(
+                      "20",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    )),
+                ButtonSegment(
+                    value: "50",
+                    // icon: Icon(Icons.timer_10),
+                    label: Text(
+                      "50",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    )),
+              ],
+              selected: expController.pageSize,
+              onSelectionChanged: (p0) =>
+                  Get.find<ExpansionController>().changeSize(p0),
+              style: ButtonStyle(
+                  foregroundColor: MaterialStatePropertyAll(
+                      Theme.of(context).colorScheme.onPrimary),
+                  backgroundColor: MaterialStatePropertyAll(
+                      Theme.of(context).colorScheme.onSecondary),
+                  minimumSize: MaterialStatePropertyAll(Size(50, 50))),
+            ),
             ExpansionPanelList(
               expansionCallback: (panelIndex, isExpanded) => expController
                   .isOpen[panelIndex] = !expController.isOpen[panelIndex],
