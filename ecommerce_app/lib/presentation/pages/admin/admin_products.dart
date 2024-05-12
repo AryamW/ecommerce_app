@@ -86,7 +86,7 @@ class MostPopularProducts extends StatelessWidget {
               padding: EdgeInsets.all(16),
               width: 300,
               height: 300,
-              child: AdminProductCard(
+              child: ProductCard(
                 index: e.id,
                 product: e,
               ),
