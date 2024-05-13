@@ -468,7 +468,7 @@ class SingleProductWidget extends StatelessWidget {
               height: 10,
             ),
             Text(
-              "\$${product.price.toStringAsFixed(2)}",
+              "${product.price.toStringAsFixed(2)} ETB",
               style: TextStyle(
                 color: Theme.of(context).colorScheme.tertiary,
                 fontWeight: FontWeight.bold,

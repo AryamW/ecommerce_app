@@ -10,7 +10,7 @@ import '../../../domain/repositories/search_product_repository.dart';
 import '../../../domain/usecases/search_product_usecase.dart';
 import '../../../domain/usecases/search_product_usecase_impl.dart';
 import '../../controllers/search_page_controller.dart';
-import '../../widgets/button.dart';
+import '../../controllers/search_text_controller.dart';
 
 
 
@@ -25,7 +25,7 @@ class SearchPage extends StatelessWidget {
 final SearchProductsDataSource searchProductsDataSource = SearchProductsDataSourceImpl();
  final SearchProductsRepository searchProductsRepository = SearchProductsRepositoryImpl(searchRepo: searchProductsDataSource);
 final SearchProductsUseCase searchProductsUseCase = SearchProductsUseCaseImpl(searchRepo: searchProductsRepository);
-  final SearchPageController controller = Get.put(SearchPageController(searchProductsUseCase));
+  final SearchPageController controller = Get.put(SearchPageController(searchProductsUseCase,keyword: keyWord));
 
   final List<Widget> filter = [
       IconButton(
@@ -48,7 +48,15 @@ final SearchProductsUseCase searchProductsUseCase = SearchProductsUseCaseImpl(se
                         color: Theme.of(context).colorScheme.secondary,
                         shape: CircleBorder()),
                     child: IconButton(
-                      onPressed: () => {controller.searchWordController.clear(),Navigator.pop(context),},
+                      onPressed: () {
+                        try {
+                          Get.find<SearchTextController>()
+                              .searchController
+                              .clear();
+                        } catch (e) {}
+                        controller.searchWordController.clear();
+                        Navigator.pop(context);
+                      },
                       icon: ImageIcon(
                         color: Theme.of(context).colorScheme.onSecondary,
                         AssetImage("lib/assets/images/arrowleft2.png"),

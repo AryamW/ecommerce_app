@@ -20,8 +20,8 @@ class SearchPageController extends GetxController {
   var sortType = "NONE".obs;
   var currentChoice = "None".obs;
   int currentPage = 0;
-  SearchController searchWordController =
-      Get.find<SearchTextController>().searchController;
+  SearchController searchWordController = SearchController();
+      // Get.find<SearchTextController>().searchController;
 
   late ExpansionController expansionController;
 
@@ -32,12 +32,12 @@ class SearchPageController extends GetxController {
   final List<Product> newItems = [];
   final SearchProductsUseCase searchProductsUseCase;
 
-  SearchPageController(this.searchProductsUseCase) {
+  SearchPageController(this.searchProductsUseCase, {String? keyword}) {
     _pagingController.addPageRequestListener((pageKey) {
       loadPage(pageKey);
     });
     // Load the first page
-    // if(initialWord!=null) {searchWordController.=initialWord!;}
+    if(keyword!=null) {searchWordController.text=keyword;}
     expansionController = Get.put(ExpansionController());
     // loadPage(offset.value);
   }

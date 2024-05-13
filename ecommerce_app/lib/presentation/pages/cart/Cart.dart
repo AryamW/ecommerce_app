@@ -235,7 +235,7 @@ class myTotal extends StatelessWidget {
               Obx(() {
                 var total =
                     Get.find<CartController>().cart.value.data!.totalPrice;
-                return Text("\$${total}",
+                return Text("${total} ETB",
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimary));
               }),
@@ -416,7 +416,7 @@ class CartTile extends StatelessWidget {
                               fontSize: 12),
                         ),
                         Text(
-                          "\$${item.price}",
+                          "${item.price} ETB",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context).colorScheme.onPrimary),

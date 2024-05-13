@@ -216,7 +216,7 @@ class page extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              product == null ? "" : "\$${product!.price}",
+                              product == null ? "" : "${product!.price} ETB",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),

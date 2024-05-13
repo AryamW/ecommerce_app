@@ -37,7 +37,7 @@ class CategoryResult extends StatelessWidget {
               // ListTile(
               //   leading: Image.network(product.imageUrl),
               //   title: Text(product.name),
-              //   subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
+              //   subtitle: Text('${product.price.toStringAsFixed(2)} ETB'),
               // ),
               noMoreItemsIndicatorBuilder: (_) => Container(alignment: Alignment.center, height: 100,child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -176,7 +176,7 @@ class ProductCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
-                          "\$${product.price}",
+                          "${product.price} ETB",
                           style: TextStyle(fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.onPrimary),
                         ),
