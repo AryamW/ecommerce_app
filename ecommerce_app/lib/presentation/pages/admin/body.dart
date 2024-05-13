@@ -1,9 +1,7 @@
 import 'package:ecommerce_app/presentation/controllers/admin_user.dart';
 import 'package:ecommerce_app/presentation/pages/admin/dashboard.dart';
 import 'package:ecommerce_app/presentation/pages/admin/view_users.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class StoreBody extends StatelessWidget {
@@ -44,7 +42,7 @@ class StoreBody extends StatelessWidget {
               ],
             ),
           ),
-          AdminDashBoard(),
+          Center(child: AdminDashBoard()),
         ],
       ),
     );

@@ -85,8 +85,8 @@ class SearchPageController extends GetxController {
     try{if (valid && _pagingController.nextPageKey!=null) {
     try {
       List<String> category = selectedFilters.map((element) => element ?? "").toList().cast<String>();
-      int low = expansionController.range.value.start.toInt();
-      int high = expansionController.range.value.end.toInt();
+      int? low = int.tryParse(expansionController.minController.text);
+      int? high = int.tryParse(expansionController.maxController.text);
       int maxSize = int.tryParse(expansionController.pageSize.single) ?? 10;
       SearchModel _searchModel = SearchModel(searchWord: searchWordController.value.text);
       _searchModel.low = low;
@@ -173,6 +173,11 @@ class SearchPageController extends GetxController {
     loadPage(_pagingController.firstPageKey);
     super.refresh();
   }
+
+void clear(){
+  selectedFilters.clear();
+  expansionController.clear();
+}
 
   Future<Result<ProductResponseModel>> SearchProduct(CancelToken cancelToken,
       {required SearchModel searchModel}) async {

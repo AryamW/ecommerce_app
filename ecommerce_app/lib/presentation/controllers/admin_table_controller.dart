@@ -6,7 +6,7 @@ import '../../domain/entities/product.dart';
 import '../../domain/usecases/search_product_usecase.dart';
 
 import 'expansion_controller.dart';
-import 'search_text_controller.dart';
+// import 'search_text_controller.dart';
 
 class AdminTableController extends GetxController {
   RxInt offset = 0.obs;
@@ -80,8 +80,8 @@ void loadNextPage(){
     if ( nextPageKey!=null) {
     try {
       List<String> category = selectedFilters.map((element) => element ?? "").toList().cast<String>();
-      int low = expansionController.range.value.start.toInt();
-      int high = expansionController.range.value.end.toInt();
+      int? low = int.tryParse(expansionController.minController.text);
+      int? high = int.tryParse(expansionController.maxController.text);
       int maxSize = int.tryParse(expansionController.pageSize.single) ?? 10;
       SearchModel _searchModel = SearchModel(searchWord: searchWordController.value.text);
       _searchModel.low = low;
@@ -158,6 +158,11 @@ void loadNextPage(){
     // _pagingController.refresh();
     super.refresh();
   }
+
+void clear(){
+  selectedFilters.clear();
+  expansionController.clear();
+}
 
   Future<Result<ProductResponseModel>> SearchProduct(CancelToken cancelToken,
       {required SearchModel searchModel}) async {
