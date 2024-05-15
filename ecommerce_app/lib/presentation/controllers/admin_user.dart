@@ -88,6 +88,11 @@ class AdminUsersController extends RegisterConroller {
     filterUsers.refresh();
   }
 
+  void changeRowsPerPage(int value) {
+    rowsPerPage(value);
+    changePage(0);
+  }
+
   void changeList(String value) {
     var users = Users.value.where((element) {
       if (element.firstname?.contains(queryParam.text) ?? false) {
@@ -195,8 +200,6 @@ class AdminUsersController extends RegisterConroller {
     } catch (e) {
       Get.toNamed("/error", arguments: {"message": "Something went wrong"});
     }
-
-    
   }
 
   Future<List<ReviewModel>> fetchRecentReviews() async {
