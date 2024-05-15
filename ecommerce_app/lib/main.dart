@@ -24,10 +24,11 @@ void main() async {
     initUniLinks();
   } catch (e) {
     String? initialLink = await getInitialLink();
+    print("init: $initialLink");
     if (initialLink != null) {
       handleLink(initialLink);
     }
-
+    print("init: $initialLink");
     print("platform error");
   }
   runApp(const MainApp());
@@ -155,9 +156,10 @@ void handleLink(String? link) {
     if (uri.host.isNotEmpty && path.isEmpty) {
       path = 'home';
     }
-    String routeName = "/${uri.path}";
+    String routeName = "${uri.path}";
 
     // Attempt to navigate to the route. If the route does not exist, GetX will throw an exception.
+        print('email email email, ${uri.path}');
     try {
       if (routeName == "/email-sent" && queryParams.isNotEmpty) {
         ForgotPasswordController forgotPasswordController =
@@ -167,8 +169,9 @@ void handleLink(String? link) {
         var token = link.split("token=")[1];
         token = Uri.encodeQueryComponent(token,
             encoding: Encoding.getByName('utf-8')!);
-        forgotPasswordController.token(token);
+        forgotPasswordController.changeToken(token);
       }
+      print("route: $routeName");
       Get.toNamed(routeName);
     } catch (e) {
       print("Route not found or navigation failed: $routeName. Error: $e");

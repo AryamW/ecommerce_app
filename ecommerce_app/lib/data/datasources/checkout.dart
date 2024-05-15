@@ -42,11 +42,12 @@ class CheckoutDataSource {
 
   Future<Map<String, dynamic>> verify(Map<String, dynamic> data) async {
     try {
-      var res = await dio.dio.get("/payment/verifypayment", data: data);
+      var res = await dio.dio.post("/payment/verifypayment", data: data);
       if (res.statusCode == 200) {
         return res.data;
       }
     } on DioException catch (e) {
+      print("ex: ${e.response}");
       handledioExceptions(e);
     } catch (e) {
       rethrow;
@@ -57,6 +58,7 @@ class CheckoutDataSource {
   Future<List<Map<String, dynamic>>> fetchAddressess() async {
     try {
       var res = await dio.dio.get("/address/shipping");
+      print("fetch addrs: ${res.data}");
       if (res.statusCode == 200) {
         return res.data["data"].cast<Map<String, dynamic>>();
       }

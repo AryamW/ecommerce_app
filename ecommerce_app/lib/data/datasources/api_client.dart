@@ -129,13 +129,30 @@ class DioClient {
       _storage.delete(key: "accessToken");
       _storage.delete(key: "refreshToken");
       _storage.delete(key: "role");
-
     } catch (e) {
       throw AuthException(message: 'Logout failed. Try later.');
     }
   }
 
+  Future<void> saveData(String? key, String? value) async {
+    try {
+      if (key != null && value != null) {
+        await _storage.write(key: key, value: value);
+      }
+    } catch (e) {
+      Get.snackbar("Failed", "couldn't save data");
+    }
+  }
+
+  Future<String?> getData(String? key) async {
+    try {
+      if (key != null) {
+        return await _storage.read(key: key);
+      }
+    } catch (e) {
+      Get.snackbar("Failed", "couldn't get data");
+    }
+  }
+
   Dio get dio => _dio;
 }
-
-

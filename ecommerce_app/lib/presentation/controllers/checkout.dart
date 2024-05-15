@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/core/utils/exceptions.dart';
+import 'package:ecommerce_app/data/datasources/api_client.dart';
 import 'package:ecommerce_app/data/datasources/checkout.dart';
 import 'package:ecommerce_app/data/repositories/checkout.dart';
 import 'package:ecommerce_app/domain/entities/cart.dart';
@@ -37,10 +38,13 @@ class CheckoutController extends LoadingController {
       var res = await useCase.makePayment(CheckoutModel(
           currency: "ETB",
           returnUrl:
-              "https://https://ecommerce-app-iota-taupe.vercel.app/add-checkout"));
+              "https://ecommerce-app-iota-taupe.vercel.app/add-checkout"));
 
       txref(res?.txref);
       checkoutUrl(res?.checkoutUrl);
+      DioClient dio = DioClient();
+      dio.saveData("txref", txref.value);
+      dio.saveData("checkoutUrl", checkoutUrl.value);
       await fetchAddress();
       print(checkoutUrl.value);
       launchUrlString(checkoutUrl.value!);
@@ -121,6 +125,11 @@ class CheckoutController extends LoadingController {
 
   Future<void> verify() async {
     try {
+      DioClient dio = DioClient();
+      txref(await dio.getData("txref"));
+      checkoutUrl(await dio.getData("checkoutUrl"));
+      print("verifying ${txref.value} ${shippingAddress.value}");
+
       var res = await useCase.verify(
           {"txRef": txref.value!, "shippingAddressId": shippingAddress.value!});
       if (res != null && res.isNotEmpty) {
@@ -129,6 +138,7 @@ class CheckoutController extends LoadingController {
         Get.toNamed("/checkout");
       }
     } on BadResponseException catch (e) {
+      print("the error: ${e.toString()}");
       if (e.statusCode == 400) {
         Get.snackbar(
             isDismissible: true,

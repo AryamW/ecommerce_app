@@ -33,13 +33,16 @@ class AuthDataSource {
 
   Future<bool> register(RegisterModel user) async {
     try {
-      var res = await dio.dio.post("/auth/register",
-          data: {"callbackUrl": "https://ecommerce-app-iota-taupe.vercel.app/confirmed-email", ...user.toJson()});
+      var res = await dio.dio.post("/auth/register", data: {
+        "callbackUrl":
+            "https://ecommerce-app-iota-taupe.vercel.app/confirmed-email",
+        ...user.toJson()
+      });
       if (res.statusCode == 201) {
         // log in
         // return await login(
         //     LoginModel(email: user.email, password: user.password));
-        
+
         return true;
       }
     } on AuthException catch (e) {

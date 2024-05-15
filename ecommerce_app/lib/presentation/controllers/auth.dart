@@ -236,6 +236,7 @@ class ForgotPasswordController extends LoadingController {
   }
 
   String changeToken(String value) {
+    print("value change in token");
     token.value = value;
     return token.value;
   }
@@ -327,6 +328,7 @@ class ForgotPasswordController extends LoadingController {
               colorText: ThemeData.dark().colorScheme.onPrimary,
               "Success",
               "Your Request has been sent. Please wait a few minutes.");
+            Future.delayed(Duration(seconds: 2), () =>  Get.offAllNamed("/login"));
         }
 
         email.value = '';

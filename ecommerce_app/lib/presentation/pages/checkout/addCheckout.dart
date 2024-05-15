@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/core/utils/roles.dart';
+import 'package:ecommerce_app/data/datasources/api_client.dart';
 import 'package:ecommerce_app/presentation/controllers/checkout.dart';
 import 'package:ecommerce_app/presentation/widgets/button.dart';
 import 'package:ecommerce_app/presentation/widgets/roleBasedAccessControlWidget.dart';
@@ -10,6 +11,7 @@ import 'package:get/get.dart';
 // a page where you are redirected after make the payment, "return url" destination
 class AddCheckout extends StatelessWidget {
   var controller = Get.put(CheckoutController());
+  // var controller = Get.find<CheckoutController>();
   AddCheckout({super.key});
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class addCheckoutBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.find<CheckoutController>().fetchAddress();
     return Material(
       child: Container(
           color: Theme.of(context).colorScheme.primary,
@@ -55,31 +58,32 @@ class addCheckoutBody extends StatelessWidget {
                     SizedBox(
                       height: 30,
                     ),
-                    GetBuilder(
-                      init: Get.find<CheckoutController>(),
-                      builder: (controller) {
-                        // return Text("kjdfaklj");
-                        return DropdownMenu(
-                          textStyle: TextStyle(
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.secondary,
-                              color: Theme.of(context).colorScheme.onPrimary),
-                          onSelected: (value) {
-                            controller.shippingAddress(value);
-                          },
-                          dropdownMenuEntries: controller.shippingAddressChoices
-                              .map((element) {
-                                return DropdownMenuEntry(
-                                    label: element["street"] +
-                                        ", " +
-                                        element["city"],
-                                    value: element["addressId"]);
-                              })
-                              .toList()
-                              .cast<DropdownMenuEntry>(),
-                        );
-                      },
-                    ),
+                    Obx(() {
+                      var controller = Get.find<CheckoutController>();
+                      print(
+                          "fetched adresses in addCheck OBx: ${controller.shippingAddressChoices}");
+
+                      return DropdownMenu(
+                        textStyle: TextStyle(
+                            backgroundColor:
+                                Theme.of(context).colorScheme.secondary,
+                            color: Theme.of(context).colorScheme.onPrimary),
+                        onSelected: (value) {
+                          print('value: $value');
+                          controller.shippingAddress(value);
+                        },
+                        dropdownMenuEntries: controller.shippingAddressChoices
+                            .map((element) {
+                              return DropdownMenuEntry(
+                                  label: element["street"] +
+                                      ", " +
+                                      element["city"],
+                                  value: element["addressId"]);
+                            })
+                            .toList()
+                            .cast<DropdownMenuEntry>(),
+                      );
+                    }),
                     SizedBox(
                       height: 30,
                     ),
