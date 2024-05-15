@@ -23,6 +23,11 @@ void main() async {
   try {
     initUniLinks();
   } catch (e) {
+    String? initialLink = await getInitialLink();
+    if (initialLink != null) {
+      handleLink(initialLink);
+    }
+
     print("platform error");
   }
   runApp(const MainApp());
@@ -74,19 +79,27 @@ class ThemeController extends GetxController {
   Rx<ThemeMode> theme = ThemeMode.dark.obs;
   @override
   void onInit() {
-    try{isSwitched.value? SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark): SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);}catch(e){}
+    try {
+      isSwitched.value
+          ? SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark)
+          : SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+    } catch (e) {}
     super.onInit();
-    
   }
+
   void onItemTapped() {
     isSwitched.value = !isSwitched.value;
     if (isSwitched.value) {
       theme.value = ThemeMode.light;
-      try{SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);}catch(e){}
+      try {
+        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+      } catch (e) {}
     }
     if (!isSwitched.value) {
       theme.value = ThemeMode.dark;
-      try{SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);}catch(e){}
+      try {
+        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+      } catch (e) {}
     }
   }
 }
@@ -118,6 +131,7 @@ void initUniLinks() {
 }
 
 void handleLink(String? link) {
+  print("htere is the link: $link");
   if (link == null) {
     print("Received null link. Ignoring.");
     return;
@@ -132,10 +146,16 @@ void handleLink(String? link) {
       return;
     }
 
+    if (uri.host.isNotEmpty && uri.path.isEmpty) {}
+
     Map<String, String> queryParams = uri.queryParameters;
     print("Query parameters: $queryParams");
     // Assuming the host is used as a route name. Adjust as necessary.
-    String routeName = "/${uri.host}";
+    String path = uri.path;
+    if (uri.host.isNotEmpty && path.isEmpty) {
+      path = 'home';
+    }
+    String routeName = "/${uri.path}";
 
     // Attempt to navigate to the route. If the route does not exist, GetX will throw an exception.
     try {

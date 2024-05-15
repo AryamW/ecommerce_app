@@ -37,7 +37,7 @@ class CheckoutController extends LoadingController {
       var res = await useCase.makePayment(CheckoutModel(
           currency: "ETB",
           returnUrl:
-              "https://red-ecommerce.onrender.com/test/redirect?path=add-checkout"));
+              "https://https://ecommerce-app-iota-taupe.vercel.app/add-checkout"));
 
       txref(res?.txref);
       checkoutUrl(res?.checkoutUrl);

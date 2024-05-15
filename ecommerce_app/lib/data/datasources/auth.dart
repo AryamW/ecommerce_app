@@ -34,7 +34,7 @@ class AuthDataSource {
   Future<bool> register(RegisterModel user) async {
     try {
       var res = await dio.dio.post("/auth/register",
-          data: {"callbackUrl": "red://confirmed-email", ...user.toJson()});
+          data: {"callbackUrl": "https://ecommerce-app-iota-taupe.vercel.app/confirmed-email", ...user.toJson()});
       if (res.statusCode == 201) {
         // log in
         // return await login(
@@ -62,7 +62,7 @@ class AuthDataSource {
   Future<bool> forgotPasswordEmail(String email) async {
     try {
       var url =
-          "/auth/forgot-password?email=$email&callbackUrl=${Uri.encodeComponent("red://email-sent")}";
+          "/auth/forgot-password?email=$email&callbackUrl=${Uri.encodeComponent("https://ecommerce-app-iota-taupe.vercel.app/email-sent")}";
       var res = await dio.dio.post(url, data: email);
       if (res.statusCode == 200) {
         return true;

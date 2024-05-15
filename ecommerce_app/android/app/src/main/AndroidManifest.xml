@@ -30,7 +30,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="red"/>
+                <data android:scheme="https://" android:host="ecommerce-app-iota-taupe.vercel.app"/>
                
             </intent-filter>
 
