@@ -21,14 +21,6 @@ Future<GetUserModel?> getUserDetails() async {
     try { var result = await useCase.getUserDetails();
     // print("object");
     return result;
-    } on CustomeException catch (e) {
-      Get.toNamed("/error", arguments: {"message": e.toString()});
-      return GetUserModel();
-    } on BadResponseException catch (e) {
-      return GetUserModel();
-    } on NetworkException catch (e) {
-      Get.toNamed("/error", arguments: {"message": e.toString()});
-      return GetUserModel();
     } catch (e) {
       return GetUserModel();
     }

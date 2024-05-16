@@ -26,53 +26,93 @@ import 'package:ecommerce_app/presentation/pages/settings/address_page.dart';
 import 'package:ecommerce_app/presentation/pages/settings/edit_address_page.dart';
 import 'package:ecommerce_app/presentation/pages/settings/edit_profile_page.dart';
 import 'package:ecommerce_app/presentation/pages/settings/settings_page.dart';
+import 'package:ecommerce_app/presentation/widgets/route_guard.dart';
 import 'package:get/get.dart';
 
 final routes = [
 // admin
-  GetPage(name: "/admin-home", page: () => StorePage()),
-  GetPage(name: "/add-staff", page: () => RegisterAdminPage()),
-  GetPage(name: "/admin-recent-reviews", page: () => AdminReviews()),
-  GetPage(name: "/admin-recent-orders", page: () => AdminOrders()),
-  GetPage(name: "/admin-most-products", page: () => MostProductsEntry()),
-  GetPage(name: "/admin-out-of-stock", page: () => OutOfStockProductEntry()),
+  GetPage(name: "/admin-home", page: () => StorePage(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/add-staff", page: () => RegisterAdminPage(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/admin-recent-reviews", page: () => AdminReviews(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/admin-recent-orders", page: () => AdminOrders(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/admin-most-products", page: () => MostProductsEntry(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/admin-out-of-stock", page: () => OutOfStockProductEntry(), middlewares: [RouteGuardMiddelware(priority: 1)]),
 // admin
 
-  GetPage(name: "/home", page: () => EntryPage()),
-  GetPage(name: "/login", page: () => LoginPage()),
-  GetPage(name: "/register", page: () => RegisterPage()),
-  GetPage(name: "/forgot-password", page: () => ForgotPassword()),
-  GetPage(name: "/email-sent", page: () => EmailSent()),
-  GetPage(name: "/cart", page: () => Cart_cart()),
+  GetPage(name: "/home", page: () => EntryPage(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/login", page: () => LoginPage(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/register", page: () => RegisterPage(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/forgot-password", page: () => ForgotPassword(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/email-sent", page: () => EmailSent(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/cart", page: () => Cart_cart(), middlewares: [RouteGuardMiddelware(priority: 1)]),
   // to be modified to conditional rendering for empty cart.
-  GetPage(name: "/emptyCart", page: () => EmptyCart()),
-  GetPage(name: "/add-checkout", page: () => AddCheckout()),
-  GetPage(name: "/checkout", page: () => CheckoutPage()),
-  GetPage(name: "/productDetail", page: () => ProductDetails()),
-  GetPage(name: "/search", page: () => SearchPage()),
-  GetPage(name: "/settings", page: () => SettingsPage()),
-  GetPage(name: "/address", page: () => AddressPage()),
-  GetPage(name: "/confirm", page: () => ConfirmPage()),
-  GetPage(name: "/confirmed-email", page: () => ConfirmedEmail()),
+  GetPage(name: "/emptyCart", page: () => EmptyCart(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/add-checkout", page: () => AddCheckout(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/checkout", page: () => CheckoutPage(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/productDetail", page: () => ProductDetails(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/search", page: () => SearchPage(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/settings", page: () => SettingsPage(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/address", page: () => AddressPage(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/confirm", page: () => ConfirmPage(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/confirmed-email", page: () => ConfirmedEmail(), middlewares: [RouteGuardMiddelware(priority: 1)]),
   GetPage(
       name: "/addAddress",
       page: () => EditAddressPage(
             createNewAddress: true,
-          )),
-  GetPage(name: "/error", page: () => ErrorPage()),
-  GetPage(name: "/category", page: () => CategoriesPage()),
-  GetPage(name: "/selectedCategory", page: () => SelectedCategoryPage()),
-  GetPage(name: "/editProfile", page: () => EditProfilePage()),
+          ), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/error", page: () => ErrorPage(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/category", page: () => CategoriesPage(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/selectedCategory", page: () => SelectedCategoryPage(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/editProfile", page: () => EditProfilePage(), middlewares: [RouteGuardMiddelware(priority: 1)]),
   GetPage(
       name: "/editAddress",
       page: () => EditAddressPage(
             createNewAddress: false,
-          )),
-  // GetPage(name: "/search", page: () => HomePage()),
-  GetPage(name: "/adminProducts", page: () => MyProducts()),
-  GetPage(name: "/adminEditProducts", page: () => EditProduct()),
+          ), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  // GetPage(name: "/search", page: () => HomePage(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/adminProducts", page: () => MyProducts(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/adminEditProducts", page: () => EditProduct(), middlewares: [RouteGuardMiddelware(priority: 1)]),
 
-  GetPage(name: "/orders", page: () => OrderHistory()),
-  GetPage(name: "/order-detail", page: () => OrderDetailScreen()),
-  
+  GetPage(name: "/orders", page: () => OrderHistory(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: "/order-detail", page: () => OrderDetailScreen(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+  GetPage(name: '/*', page: () => LoginPage(), middlewares: [RouteGuardMiddelware(priority: 1)]),
+];
+
+final List<String> loginRoutes = [
+  "/login",
+  "/register",
+  "/forgot-password",
+  "/email-sent",
+  "/confirm",
+  "/confirmed-email",
+];
+
+
+final List<String> homeRoutes = [
+"/admin-home", 
+"/add-staff", 
+"/admin-recent-reviews", 
+"/admin-recent-orders", 
+"/admin-most-products", 
+"/admin-out-of-stock", 
+"/home",
+"/cart", 
+"/emptyCart", 
+"/add-checkout", 
+"/checkout", 
+"/productDetail", 
+"/search", 
+"/settings", 
+"/address", 
+"/addAddress",
+"/category", 
+"/selectedCategory", 
+"/editProfile", 
+"/editAddress",
+"/search", 
+"/adminProducts", 
+"/adminEditProducts", 
+"/orders", 
+"/order-detail", 
+
 ];

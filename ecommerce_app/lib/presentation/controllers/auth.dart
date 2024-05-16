@@ -9,6 +9,7 @@ import 'package:ecommerce_app/domain/repositories/auth.dart';
 import 'package:ecommerce_app/domain/usecases/auth.dart';
 import 'package:ecommerce_app/presentation/pages/auth/register.dart';
 import 'package:ecommerce_app/presentation/widgets/roleBasedAccessControlWidget.dart';
+import 'package:ecommerce_app/presentation/widgets/route_guard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -61,11 +62,14 @@ class LoginController extends LoadingController {
           print(res);
           print(await dio.getRole());
           if (await dio.getRole() == 'Admin') {
+            Get.find<RouteGuard>().toggleLoginStatus(true);
             Get.toNamed("/home", arguments: {'role': 'Admin'});
           } else {
+            Get.find<RouteGuard>().toggleLoginStatus(true);
             Get.toNamed("/home", arguments: {'role': 'Customer'});
           }
         } else {
+          Get.find<RouteGuard>().toggleLoginStatus(false);
           null;
         }
         emailController.text = '';
@@ -189,6 +193,7 @@ class LogoutController extends LoadingController {
           repo: AuthRepositoryImpl(authProvider: AuthDataSource()));
       bool a = await use.logout();
       if (a == true) {
+        Get.find<RouteGuard>().toggleLoginStatus(false);
         Get.offAllNamed("/login");
         Get.deleteAll();
         DioClient().getRefreshToken().then(

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:ecommerce_app/presentation/widgets/route_guard.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,7 @@ void main() async {
   await dotenv.load();
   Get.put(ThemeController(), permanent: true);
   Get.put(GetMaterialController(), permanent: true);
+  Get.put(RouteGuard(),permanent: true);
   WidgetsFlutterBinding.ensureInitialized();
   Core core = Core();
   await core.setUserData();
@@ -49,6 +51,7 @@ class MainApp extends StatelessWidget {
         darkTheme: darkTheme,
         getPages: routes,
         themeMode: Get.find<ThemeController>().theme.value,
+        initialRoute: "/home",
         home: EntryPage(),
       ),
     );

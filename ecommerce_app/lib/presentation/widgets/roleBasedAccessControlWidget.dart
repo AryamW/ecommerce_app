@@ -2,6 +2,8 @@ import 'package:ecommerce_app/core/utils/roles.dart';
 import 'package:ecommerce_app/data/datasources/api_client.dart';
 import 'package:ecommerce_app/presentation/pages/ErrorPage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ecommerce_app/presentation/widgets/route_guard.dart';
 
 class AccessControlWidget extends StatefulWidget {
   final Widget child;
@@ -67,6 +69,7 @@ class Core {
     } else {
       _role = null;
     }
+    Get.find<RouteGuard>().toggleLoginStatus( r != null ) ;
     // [user]
   }
 }
