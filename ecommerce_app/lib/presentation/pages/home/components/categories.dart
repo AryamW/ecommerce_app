@@ -67,11 +67,11 @@ class Categories extends StatelessWidget {
                   return Column(
                     children: [
                       IconButton(
-                        onPressed: () => Get.toNamed("/selectedCategory",parameters: {"category": Category.values[index].name}),
+                        onPressed: () => Get.toNamed("/selectedCategory",arguments: {"category": Category.values[index].name}),
                         icon: categoryIcons[index],
                       ),
                       GestureDetector(
-                          onTap: () => Get.toNamed("/selectedCategory",parameters: {"category": Category.values[index].name}),
+                          onTap: () => Get.toNamed("/selectedCategory",arguments: {"category": Category.values[index].name}),
                           child: Container(
                             height: 60,
                             child: Text(

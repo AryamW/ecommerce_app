@@ -118,7 +118,7 @@ class CategoryBtn extends StatelessWidget {
         //               context,
         //               MaterialPageRoute(
         //                   builder: (context) => SelectedCategoryPage()))
-                          Get.toNamed("/selectedCategory",parameters: {"category": Category.values[index].name}),
+                          Get.toNamed("/selectedCategory",arguments: {"category": Category.values[index].name}),
         child: Row(
           children: [
            categoryIcons[index],

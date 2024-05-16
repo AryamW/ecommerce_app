@@ -67,7 +67,7 @@ class CategoryPageController extends GetxController {
       SearchModel _searchModel = SearchModel();
       _searchModel.start = pageKey;
       _searchModel.maxSize = maxSize;
-      _searchModel.category = [Get.parameters["category"]];
+      _searchModel.category = [Get.arguments?["category"]];
       
       if (offset.value != -1 && _cancelToken!=null){
         cancelTokens.add(_cancelToken!);
