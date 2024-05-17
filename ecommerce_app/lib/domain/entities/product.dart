@@ -25,8 +25,10 @@ class PDetailModel {
   static PDetailModel fromJson(Map<String, dynamic> json) {
     try {
       List images = json['images'];
-      var imageList =[];
-     images.forEach((element) => imageList.add("${dotenv.env["BASE_URL"]}/Images/$element"),);
+      var imageList = [];
+      images.forEach(
+        (element) => imageList.add("${dotenv.env["BASE_URL"]}/Images/$element"),
+      );
       var b = PDetailModel(
         id: json["id"],
         name: json["name"],
@@ -78,20 +80,21 @@ class Product {
   final int count;
   factory Product.fromJson(Map<String, dynamic> json) {
     List images = json['images'];
-    var imageList =[];
-     images.forEach((element) => imageList.add("${dotenv.env["BASE_URL"]}/Images/$element"),);
-    return Product(
-      id: json['id'].toInt(),
-      name: json['name'],
-      price: json['price'].toDouble(),
-      imageUrl: imageList,
-      brand: json["brand"],
-      details: json["details"],
-      count: json["count"].toInt(),
-      category: json["category"]
+    var imageList = [];
+    images.forEach(
+      (element) => imageList.add("${dotenv.env["BASE_URL"]}/Images/$element"),
     );
+    return Product(
+        id: json['id'].toInt(),
+        name: json['name'],
+        price: json['price'].toDouble(),
+        imageUrl: imageList,
+        brand: json["brand"],
+        details: json["details"],
+        count: json["count"].toInt(),
+        category: json["category"]);
   }
-Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       "id": id,
       "name": name,
@@ -103,7 +106,8 @@ Map<String, dynamic> toJson() {
       "category": category,
     };
   }
-Map<String, dynamic> toAdminJson() {
+
+  Map<String, dynamic> toAdminJson() {
     return {
       "id": id,
       "name": name,
@@ -115,8 +119,15 @@ Map<String, dynamic> toAdminJson() {
     };
   }
 
-
-  Product({required this.name, required this.price, required this.imageUrl, required this.id, required this.brand, required this.details, required this.count, required this.category});
+  Product(
+      {required this.name,
+      required this.price,
+      required this.imageUrl,
+      required this.id,
+      required this.brand,
+      required this.details,
+      required this.count,
+      required this.category});
 }
 
 class SearchModel {
@@ -180,8 +191,6 @@ class ProductResponseModel {
   }
 }
 
-
-
 class AdminProduct {
   int? id;
   String? name;
@@ -194,21 +203,30 @@ class AdminProduct {
   File? imgFiles;
   factory AdminProduct.fromJson(Map<String, dynamic> json) {
     List images = json['images'];
-    var imageList =[];
-     images.forEach((element) => imageList.add("${dotenv.env["BASE_URL"]}/Images/$element"),);
-    return AdminProduct(
-      id: json['id'].toInt(),
-      name: json['name'],
-      price: json['price'].toDouble(),
-      imageUrl: imageList,
-      brand: json["brand"],
-      details: json["details"],
-      count: json["count"].toInt(),
-      category: json["category"]
+    var imageList = [];
+    images.forEach(
+      (element) => imageList.add("${dotenv.env["BASE_URL"]}/Images/$element"),
     );
+    return AdminProduct(
+        id: json['id'].toInt(),
+        name: json['name'],
+        price: json['price'].toDouble(),
+        imageUrl: imageList,
+        brand: json["brand"],
+        details: json["details"],
+        count: json["count"].toInt(),
+        category: json["category"]);
   }
 
-  AdminProduct({this.name, this.price, this.imageUrl, this.id, this.brand, this.details, this.count, this.category});
+  AdminProduct(
+      {this.name,
+      this.price,
+      this.imageUrl,
+      this.id,
+      this.brand,
+      this.details,
+      this.count,
+      this.category});
 
   Map<String, dynamic> toAdminJson() {
     return {
@@ -223,7 +241,7 @@ class AdminProduct {
     };
   }
 
-  toForm() async{
+  toForm() async {
     return FormData.fromMap({
       if (id != null) "id": id!,
       if (name != null && name != "") "name": name!,
@@ -233,8 +251,8 @@ class AdminProduct {
       if (details != null && details != "") "details": details!,
       if (count != null) "count": count!,
       if (category != null && category != "") "category": category!,
-      if (imgFiles != null ) "imgFiles": await MultipartFile.fromFile(imgFiles!.path),
-  
+      if (imgFiles != null)
+        "imgFiles": await MultipartFile.fromFile(imgFiles!.path),
     });
   }
 }

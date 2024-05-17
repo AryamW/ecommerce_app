@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'dart:io' show Platform;
 
 class CheckoutController extends LoadingController {
   final txref = RxnString(null);
@@ -33,12 +34,18 @@ class CheckoutController extends LoadingController {
   void makePayment() async {
     // var body = {"currency": "ETB", "returnUrl": "www.google.com"};
     print("make Payment");
-
+    String returnUrlBase = "https://";
+    try {
+      if (Platform.isAndroid) {
+        returnUrlBase =
+            "https://red-ecommerce.onrender.com/test/redirect?path=red://";
+      }
+    } catch (e) {}
     try {
       var res = await useCase.makePayment(CheckoutModel(
           currency: "ETB",
           returnUrl:
-              "https://ecommerce-app-iota-taupe.vercel.app/add-checkout"));
+              "${returnUrlBase}ecommerce-app-iota-taupe.vercel.app/add-checkout"));
 
       txref(res?.txref);
       checkoutUrl(res?.checkoutUrl);

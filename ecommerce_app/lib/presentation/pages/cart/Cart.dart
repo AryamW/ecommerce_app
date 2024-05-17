@@ -350,10 +350,10 @@ class CartTile extends StatelessWidget {
     String title =
         Get.find<CartController>().cart.value.data!.items[index].product.name;
     CartItem item = Get.find<CartController>().cart.value.data!.items[index];
-
+    // print(item.product.images);
     return Container(
         padding: EdgeInsets.all(10),
-        height: 80,
+        // height: 80,
         color: Theme.of(context).colorScheme.secondary,
         // padding: EdgeInsets.symmetric(vertical: 10),
         child: Row(
@@ -361,32 +361,22 @@ class CartTile extends StatelessWidget {
           children: [
             Container(
               clipBehavior: Clip.hardEdge,
-              width: 64,
-              height: 64,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
               ),
-              child: Get.find<CartController>()
-                      .cart
-                      .value
-                      .data!
-                      .items[index]
-                      .product
-                      .images!
-                      .isNotEmpty
+              child: item.product.images!.isNotEmpty
                   ? Image.network(
-                      Get.find<CartController>()
-                          .cart
-                          .value
-                          .data
-                          ?.items[index]
-                          .product
-                          .images![0]!,
+                      width: 64,
+                      height: 64,
+                      item.product.images![0]!,
                       fit: BoxFit.cover,
                     )
                   : SizedBox(
-                      width: 32,
+                      width: 64,
                       height: 64,
+                      child: Container(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                      ),
                     ),
             ),
             SizedBox(
@@ -395,13 +385,14 @@ class CartTile extends StatelessWidget {
             Expanded(
               flex: 3,
               child: Container(
-                height: 51,
+                // height: 51,
                 // color: Colors.red,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Wrap(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           Get.find<CartController>()
@@ -415,6 +406,9 @@ class CartTile extends StatelessWidget {
                               color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 12),
                         ),
+                        SizedBox(
+                          width: 2,
+                        ),
                         Text(
                           "${item.price} ETB",
                           style: TextStyle(
@@ -423,8 +417,8 @@ class CartTile extends StatelessWidget {
                         )
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Wrap(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           height: 24,
@@ -505,6 +499,9 @@ class CartTile extends StatelessWidget {
                               ),
                             ],
                           ),
+                        ),
+                        SizedBox(
+                          width: 2,
                         ),
                         Text(
                           "in Stock: ${item.product.count}",

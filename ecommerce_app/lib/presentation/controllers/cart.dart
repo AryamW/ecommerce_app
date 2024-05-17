@@ -53,6 +53,7 @@ class CartController extends GetxController {
     try {
       var cartv2 = await useCase.fetchItems();
       changeCart(cartv2!);
+      print(cartv2.data!.items[0].product.images);
       return cart.value;
     } on BadResponseException catch (e) {
       rethrow;

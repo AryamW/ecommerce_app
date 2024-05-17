@@ -7,6 +7,7 @@ import 'package:ecommerce_app/domain/entities/auth.dart';
 import 'package:ecommerce_app/data/datasources/api_client.dart';
 import 'package:ecommerce_app/domain/entities/product.dart';
 import 'package:get/get.dart';
+import 'dart:io' show Platform;
 
 class AuthDataSource {
   DioClient dio = DioClient();
@@ -32,10 +33,16 @@ class AuthDataSource {
   }
 
   Future<bool> register(RegisterModel user) async {
+    String returnUrlScheme = "https://";
+    try {
+      if (Platform.isAndroid) {
+        returnUrlScheme = "red://";
+      }
+    } catch (e) {}
     try {
       var res = await dio.dio.post("/auth/register", data: {
         "callbackUrl":
-            "https://ecommerce-app-iota-taupe.vercel.app/confirmed-email",
+            "${returnUrlScheme}ecommerce-app-iota-taupe.vercel.app/confirmed-email",
         ...user.toJson()
       });
       if (res.statusCode == 201) {
@@ -63,9 +70,15 @@ class AuthDataSource {
   }
 
   Future<bool> forgotPasswordEmail(String email) async {
+    String returnUrlScheme = "https://";
+    try {
+      if (Platform.isAndroid) {
+        returnUrlScheme = "red://";
+      }
+    } catch (e) {}
     try {
       var url =
-          "/auth/forgot-password?email=$email&callbackUrl=${Uri.encodeComponent("https://ecommerce-app-iota-taupe.vercel.app/email-sent")}";
+          "/auth/forgot-password?email=$email&callbackUrl=${Uri.encodeComponent("${returnUrlScheme}ecommerce-app-iota-taupe.vercel.app/email-sent")}";
       var res = await dio.dio.post(url, data: email);
       if (res.statusCode == 200) {
         return true;

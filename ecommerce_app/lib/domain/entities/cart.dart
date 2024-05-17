@@ -26,6 +26,7 @@ class CartItem {
   }
 
   factory CartItem.fromJson(Map<String, dynamic> json) {
+    // print(json);
     return CartItem(
       cartItemId: json["cartItemId"],
       price: json["price"],
