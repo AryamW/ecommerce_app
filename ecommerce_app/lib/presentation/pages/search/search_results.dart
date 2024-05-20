@@ -20,6 +20,7 @@ class SearchResult extends StatelessWidget {
           children: [
             PagedGridView<int, Product>(
             scrollController: _scrollController,
+            showNewPageProgressIndicatorAsGridChild: false,
             showNewPageErrorIndicatorAsGridChild: false,
             showNoMoreItemsIndicatorAsGridChild: false,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -59,7 +60,16 @@ class SearchResult extends StatelessWidget {
               noItemsFoundIndicatorBuilder: (_) => ListTile(leading: Image.asset('lib/assets/images/search error.png'),title: Text("Sorry, we couldn't find any \nmatching results for your \nSearch",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),),),
               firstPageProgressIndicatorBuilder: (context) => ListTile(title: Text("Loading More Items......",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),),),
               // newPageProgressIndicatorBuilder: (_) => ListTile(title: Text("Loading More Items......",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),),tileColor: Colors.green.shade200,),
-              newPageProgressIndicatorBuilder: (context) => CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary,backgroundColor: Theme.of(context).colorScheme.secondary),
+              newPageProgressIndicatorBuilder: (context) => Center(
+                child: SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: CircularProgressIndicator(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      backgroundColor:
+                          Theme.of(context).colorScheme.secondary),
+                ),
+              ),
               firstPageErrorIndicatorBuilder: (context) => Column(
                 children: [
                   Text("A problem was encountered. Please check your network and try again",style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),),

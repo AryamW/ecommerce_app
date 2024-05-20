@@ -11,7 +11,7 @@ import 'category_result.dart';
 
 class SelectedCategoryPage extends StatelessWidget {
   SelectedCategoryPage({super.key});
-  final String selectedCategory = Get.arguments?["category"]??"category";
+  final String selectedCategory = Get.parameters["category"]??"category";
   @override
   Widget build(BuildContext context) {
 final SearchProductsDataSource searchProductsDataSource = SearchProductsDataSourceImpl();

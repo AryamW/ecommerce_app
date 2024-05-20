@@ -24,8 +24,8 @@ import '../widgets/navrail.dart';
 class EntryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Get.put(NavigationController());
-    Get.put(SettingsController());
+    Get.lazyPut(() => NavigationController());
+    Get.lazyPut(() => SettingsController());
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).colorScheme.primary,

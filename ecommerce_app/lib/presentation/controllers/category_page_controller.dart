@@ -11,7 +11,7 @@ class CategoryPageController extends GetxController {
   RxInt offset = 0.obs;
   RxInt total = 0.obs;
   // String? initialWord;
-  var selectedFilters = [].obs;
+  final List<String?> selectedCategory = [Get.parameters["category"]];
   // var searchWord = ''.obs;
   RxnString confirmError = RxnString(null);
   int currentPage = 0;
@@ -30,28 +30,6 @@ class CategoryPageController extends GetxController {
     });
   }
 
-  void addFilter(String filter) {
-    selectedFilters.add(filter);
-  }
-
-  void removeFilter(String filter) {
-    selectedFilters.remove(filter);
-  }
-
-
-
-
-
-
-  // void validateSearchWord() {
-  //   if (searchWordController.text.trim().isAlphabetOnly &&
-  //       !searchWordController.text.trim().isEmpty) {
-  //     valid = true;
-  //   } else {
-  //     valid = false;
-  //     confirmError.value = 'Please enter a valid search';
-  //   }
-  // }
 
   CancelToken? _cancelToken; // Token to cancel the Dio request
   List<CancelToken> cancelTokens = [];
@@ -67,7 +45,7 @@ class CategoryPageController extends GetxController {
       SearchModel _searchModel = SearchModel();
       _searchModel.start = pageKey;
       _searchModel.maxSize = maxSize;
-      _searchModel.category = [Get.arguments?["category"]];
+      _searchModel.category = selectedCategory;
       
       if (offset.value != -1 && _cancelToken!=null){
         cancelTokens.add(_cancelToken!);
