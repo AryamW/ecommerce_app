@@ -48,4 +48,3 @@ app.*.map.json
 services
 discard
 lib/data/datasources/chapa payment.txt
-lib/firebase_options.dart
