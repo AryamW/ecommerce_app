@@ -147,43 +147,36 @@ class AdminUserDataSource {
 
   Future<List<Product>> fetchMostPopularProducts() async {
     try {
-      var res = await dio.dio.get("/product");
-      if (res.statusCode == 200) {
-        // print("products: ${res.data['productDtos']}");
-        List? data = res.data['productDtos'];
-        // print("data: $data");
-        if (data != null) {
-          List<Product> reList = data.map((e) => Product.fromJson(e)).toList();
-          return reList;
+      final response = await dio.dio.get("/product?sortType=VIEWS_DESCENDING");
+      if (response.statusCode == 200) {
+        if (response.data.isNotEmpty) {
+          final productDtos = response.data['productDtos'];
+          return productDtos
+                  ?.map((product) => Product.fromJson(product))
+                  .toList() ??
+              [];
         }
       }
     } on DioException catch (e) {
-      print("here ? ? ?");
-      print(e);
       handledioExceptions(e);
-    } catch (e) {
-      rethrow;
     }
     return [];
   }
 
-
-
   Future<List<Product>> fetchOutOfStockProducts() async {
     try {
-      var res = await dio.dio.get("/product");
-      if (res.statusCode == 200) {
-        // print("products: ${res.data['productDtos']}");
-        List? data = res.data['productDtos'];
-        // print("data: $data");
-        if (data != null) {
-          List<Product> reList = data.map((e) => Product.fromJson(e)).toList();
-          return reList;
+      final response = await dio.dio.get("/admin/get_out_of_stock_products");
+      if (response.statusCode == 200) {
+        final productData = response.data;
+        if (productData.isNotEmpty) {
+          final productDtos = productData['productDtos'];
+          return productDtos
+                  ?.map((productJson) => Product.fromJson(productJson))
+                  ?.toList() ??
+              [];
         }
       }
     } on DioException catch (e) {
-      print("here ? ? ?");
-      print(e);
       handledioExceptions(e);
     } catch (e) {
       rethrow;
