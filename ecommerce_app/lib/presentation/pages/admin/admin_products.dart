@@ -24,19 +24,8 @@ class MostProductsEntry extends StatelessWidget {
         ),
       ),
       body: Center(
-          child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                // choice widget.
-              ],
-            ),
-            Obx(() => MostPopularProducts(
-                products: controller.mostPopularProducts.value)),
-          ],
-        ),
-      )),
+          child: Obx(() => MostPopularProducts(
+              products: controller.mostPopularProducts.value))),
     );
   }
 }
@@ -60,7 +49,7 @@ class OutOfStockProductEntry extends StatelessWidget {
       ),
       body: Center(
         child: Obx(() =>
-            OutOfStockProducts(products: controller.outOfStockProducts.value)),
+            OutOfStockProducts(products: controller.mostPopularProducts.value)),
       ),
     );
   }

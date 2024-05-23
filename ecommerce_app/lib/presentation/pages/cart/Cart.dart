@@ -351,7 +351,6 @@ class CartTile extends StatelessWidget {
         Get.find<CartController>().cart.value.data!.items[index].product.name;
     CartItem item = Get.find<CartController>().cart.value.data!.items[index];
     // print(item.product.images);
-    print("image 0: ${item.product.images![0].toString()}");
     return Container(
         padding: EdgeInsets.all(10),
         // height: 80,
@@ -369,15 +368,8 @@ class CartTile extends StatelessWidget {
                   ? Image.network(
                       width: 64,
                       height: 64,
-                      item.product.images![0].toString(),
+                      item.product.images![0]!,
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => SizedBox(
-                        width: 64,
-                        height: 64,
-                        child: Container(
-                          color: Theme.of(context).colorScheme.onSecondary,
-                        ),
-                      ),
                     )
                   : SizedBox(
                       width: 64,

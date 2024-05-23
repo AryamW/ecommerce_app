@@ -312,12 +312,11 @@ class AdminUsersController extends RegisterConroller {
     return [];
   }
 
-  Future<List<Product?>> fetchOutOfStockProducts() async {
+  Future<List<PDetailModel?>> fetchOutOfStockProducts() async {
     try {
       var res = await useCase.fetchOutOfStockProducts();
       outOfStockProducts(res);
       outOfStockNumber(res.length);
-      outOfStockProducts.refresh();
     } on BadResponseException catch (e) {
       outOfStockProductsError({"status": e.statusCode, "message": e.message});
     } on NetworkException catch (e) {
@@ -327,6 +326,6 @@ class AdminUsersController extends RegisterConroller {
 
       outOfStockProductsError({"status": null, "message": "Unavailable"});
     }
-    return outOfStockProducts.value;
+    return [];
   }
 }

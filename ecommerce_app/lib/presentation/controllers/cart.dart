@@ -62,7 +62,6 @@ class CartController extends GetxController {
     } on CustomeException catch (e) {
       rethrow;
     } catch (e) {
-      
       throw Exception("Something went wrong. Try again later.");
     }
   }
