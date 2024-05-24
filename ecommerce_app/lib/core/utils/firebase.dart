@@ -26,6 +26,7 @@ class FirebaseApi {
     await _firebaseMessaging.requestPermission();
     final fCMToken = await _firebaseMessaging.getToken();
     // better to save it in backend database
+    // may
     print("fCMToken: $fCMToken");
     Get.find<LoginController?>()?.saveFCMToken(fCMToken) ??
         Get.put(LoginController()).saveFCMToken(fCMToken);
