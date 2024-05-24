@@ -15,9 +15,10 @@ dependencies:
   firebase_core: ^2.31.1
   # firebase_installations: ^16.3.6
   # firebase_installations: ^16.3.6
+  firebase_messaging: ^14.9.3
   flutter:
     sdk: flutter
-  flutter_dotenv: ^5.1.0
+  flutter_dotenv: ^5.1.0  
   flutter_secure_storage:
   get: ^4.6.6
   http: ^1.2.1

@@ -33,6 +33,7 @@ void main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+    await FirebaseApi().initNotification();
   } catch (e) {}
   try {
     print("install: ${await getInstanceId()}");
