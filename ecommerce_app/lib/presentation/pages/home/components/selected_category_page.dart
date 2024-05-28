@@ -1,8 +1,8 @@
 import 'package:ecommerce_app/presentation/controllers/category_page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../data/data_sources/search_product_data_source.dart';
-import '../../../../data/data_sources/search_products_data_source_impl.dart';
+import '../../../../data/datasources/search_product_data_source.dart';
+import '../../../../data/datasources/search_products_data_source_impl.dart';
 import '../../../../data/repositories/search_product_repository_impl.dart';
 import '../../../../domain/repositories/search_product_repository.dart';
 import '../../../../domain/usecases/search_product_usecase.dart';

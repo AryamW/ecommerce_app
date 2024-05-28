@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:ecommerce_app/core/utils/category_enum.dart';
 import 'package:ecommerce_app/core/utils/exceptions.dart';
-import 'package:ecommerce_app/data/data_sources/edit_product.dart';
+import 'package:ecommerce_app/data/datasources/edit_product.dart';
 import 'package:ecommerce_app/data/datasources/api_client.dart';
 import 'package:ecommerce_app/data/repositories/edit_product.dart';
 import 'package:ecommerce_app/domain/entities/product.dart';

@@ -34,9 +34,12 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     await FirebaseApi().initNotification();
-  } catch (e) {}
+  } catch (e) {
+    print(e);
+  }
+  // dssGco4-TaWEk8etjuGZmz:APA91bGaPSA-VPVSiYUu89NMpAYUjLY4reiza1im_yeU2keTVuLb9m5jflHkxsJh0hevmSSXDZJf5wZClcDRzbWJeWRxpPgxf58MPfS5I9jqTTh_zalGEOmqCjJl9oryg7bQsLDfZfeC
   try {
-    print("install: ${await getInstanceId()}");
+    // print("install: ${await getInstanceId()}");
     initUniLinks();
   } catch (e) {
     String? initialLink = await getInitialLink();

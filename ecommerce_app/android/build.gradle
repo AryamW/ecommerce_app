@@ -1,9 +1,10 @@
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
+// allprojects {
+//     repositories {
+//         google()
+//         mavenCentral()
+//         // jcenter()
+//     }
+// }
 
 rootProject.buildDir = '../build'
 subprojects {
@@ -17,8 +18,18 @@ tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
 buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
   dependencies {
-    // Add this line
-    classpath 'com.google.gms:google-services:4.3.2'
+    classpath 'com.google.gms:google-services:4.4.1'
+  }
+}
+
+allprojects {
+  repositories {
+    google()
+    mavenCentral()
   }
 }

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:ecommerce_app/core/utils/exceptions.dart';
 import 'package:ecommerce_app/core/utils/handleExceptions.dart';
-import 'package:ecommerce_app/data/data_sources/search_product_data_source.dart';
+import 'package:ecommerce_app/data/datasources/search_product_data_source.dart';
 import 'package:ecommerce_app/domain/usecases/search_product_usecase.dart';
 
 import '../../domain/entities/product.dart';

@@ -7,6 +7,7 @@ import 'package:ecommerce_app/core/utils/handleExceptions.dart';
 import 'package:ecommerce_app/domain/entities/auth.dart';
 import 'package:ecommerce_app/data/datasources/api_client.dart';
 import 'package:ecommerce_app/domain/entities/product.dart';
+import 'package:ecommerce_app/presentation/controllers/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:io' show Platform;
@@ -127,10 +128,9 @@ class AuthDataSourceV2 extends AuthDataSource {
   @override
   Future<bool> login(LoginModel user) async {
     try {
-      String? instId = await getInstanceId();
-
-      var res = await dio.dio.post("/auth/login",
-          data: {...user.toJson(), "appID": instId});
+     String? fCMToken = Get.find<LoginController>().fCMToken.value;
+      var res = await dio.dio
+          .post("/auth/login", data: {...user.toJson(), "fCMToken": fCMToken});
       if (res.statusCode == 200) {
         // save access and refresh token to the storage
         await dio.saveTokens(res.data["accessToken"], res.data["refreshToken"],

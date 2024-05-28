@@ -49,6 +49,7 @@ class LoginController extends LoadingController {
       passwordError.value = null;
     }
   }
+
   Future<void> saveFCMToken(String? token) async {
     if (token != null) {
       fCMToken.value = token;
@@ -61,8 +62,8 @@ class LoginController extends LoadingController {
     try {
       if (emailError.value == null && passwordError.value == null) {
         var use = AuthUserCase(
-            repo: AuthRepositoryImpl(authProvider: AuthDataSource()));
-        // repo: AuthRepositoryImpl(authProvider: AuthDataSourceV2()));
+            // repo: AuthRepositoryImpl(authProvider: AuthDataSource()));
+            repo: AuthRepositoryImpl(authProvider: AuthDataSourceV2()));
         var data = LoginModel(
             email: emailController.text, password: passwordController.text);
         var res = await use.login(data);
