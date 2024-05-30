@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -40,8 +41,8 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCYLsUhLt3dpgUl5ZXQGoNsYs-yUfEt-6A',
+  static FirebaseOptions web = FirebaseOptions(
+    apiKey: getApiKey('WEB_KEY')!,
     appId: '1:641574119132:web:23aeeecad5120d7a14f619',
     messagingSenderId: '641574119132',
     projectId: 'project-red-9d656',
@@ -50,16 +51,16 @@ class DefaultFirebaseOptions {
     measurementId: 'G-N6GW3EJKPX',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCqGihK5qH8wakCJaaalzF1jjSefA8SiSU',
+  static FirebaseOptions android = FirebaseOptions(
+    apiKey: getApiKey("ANDROID_KEY")!,
     appId: '1:641574119132:android:4dfdb1310bbf3b0d14f619',
     messagingSenderId: '641574119132',
     projectId: 'project-red-9d656',
     storageBucket: 'project-red-9d656.appspot.com',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCi-UzDpb8cnlGgZ5UgFwZ2ZLMxcfwUWz4',
+  static FirebaseOptions ios = FirebaseOptions(
+    apiKey: getApiKey("IOS_KEY")!,
     appId: '1:641574119132:ios:fa49951c439f99a114f619',
     messagingSenderId: '641574119132',
     projectId: 'project-red-9d656',
@@ -67,8 +68,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.ecommerceApp',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCi-UzDpb8cnlGgZ5UgFwZ2ZLMxcfwUWz4',
+  static FirebaseOptions macos = FirebaseOptions(
+    apiKey: getApiKey("MACOS_KEY")!,
     appId: '1:641574119132:ios:fa49951c439f99a114f619',
     messagingSenderId: '641574119132',
     projectId: 'project-red-9d656',
@@ -76,8 +77,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.ecommerceApp',
   );
 
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCYLsUhLt3dpgUl5ZXQGoNsYs-yUfEt-6A',
+  static FirebaseOptions windows = FirebaseOptions(
+    apiKey: getApiKey("WINDOWS_KEY")!,
     appId: '1:641574119132:web:b425390f577a8b9d14f619',
     messagingSenderId: '641574119132',
     projectId: 'project-red-9d656',
@@ -85,5 +86,10 @@ class DefaultFirebaseOptions {
     storageBucket: 'project-red-9d656.appspot.com',
     measurementId: 'G-6BY2BH05LK',
   );
+}
 
+String? getApiKey(String key) {
+  String? value = dotenv.env[key];
+  // print("$key: $value");
+  return value;
 }

@@ -46,6 +46,7 @@ class FirebaseApi {
   Future initLocalNotifications() async {
     const IOS = DarwinInitializationSettings();
     const Android = AndroidInitializationSettings('@drawable/ic_launcher');
+    
     const settings = InitializationSettings(android: Android, iOS: IOS);
     await _localNotifications.initialize(
       settings,
