@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/core/utils/roles.dart';
 import 'package:ecommerce_app/main.dart';
+import 'package:ecommerce_app/presentation/controllers/home_page_controller.dart';
 import 'package:ecommerce_app/presentation/controllers/nav_controller.dart';
 import 'package:ecommerce_app/presentation/pages/home/components/home_result.dart';
 import 'package:ecommerce_app/presentation/widgets/roleBasedAccessControlWidget.dart';
@@ -73,7 +74,26 @@ class Body extends StatelessWidget {
           ),
         ),
         SizedBox(height: 10),
-        Categories(),
+        // Categories(),
+        Obx(()=> AnimatedContainer(
+          duration: Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+          height: Get.find<HomePageController>().isExpanded.value? 155 : 0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Categories(),
+          ),
+                ),
+        ),
+        Obx(() => Center(
+              child: IconButton(icon: Get.find<HomePageController>().isExpanded.value? Icon(Icons.arrow_drop_up_outlined,color: Theme.of(context).colorScheme.onPrimary,) : Icon(Icons.arrow_drop_down_outlined, color: Theme.of(context).colorScheme.onPrimary,),
+            onPressed: () {
+              Get.find<HomePageController>().changeExpansion();
+              },)),
+            ),
         Expanded(child: HomeResult()),
       ],
     );

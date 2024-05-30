@@ -106,6 +106,12 @@ class ThemeController extends GetxController {
       } catch (e) {}
     }
   }
+
+  var viewType = false.obs;
+  void changeViewType() {
+    viewType.value = !viewType.value;
+  }
+  
 }
 
 StreamSubscription? sub;

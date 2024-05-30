@@ -122,4 +122,9 @@ class HomePageController extends GetxController {
     var result = await searchProductsUseCase.call(cancelToken, searchModel: searchModel);
     return result;
   }
+
+  var isExpanded = true.obs;
+  void changeExpansion(){
+    isExpanded.value = !isExpanded.value;
+  }
 }
