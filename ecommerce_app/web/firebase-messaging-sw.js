@@ -4,12 +4,13 @@ importScripts(
 );
 
 firebase.initializeApp({
-  apiKey: "AIzaSyCYLsUhLt3dpgUl5ZXQGoNsYs-yUfEt-6A",
-  authDomain: "project-red-9d656.firebaseapp.com",
-  projectId: "project-red-9d656",
-  storageBucket: "project-red-9d656.appspot.com",
-  messagingSenderId: "641574119132",
-  appId: "1:641574119132:web:23aeeecad5120d7a14f619",
+  apiKey: "AIzaSyB1ifzra_LbCZJ5LnRzSeSyIsKyFOHRGDY",
+  authDomain: "red-ecommerce-d9a83.firebaseapp.com",
+  projectId: "red-ecommerce-d9a83",
+  storageBucket: "red-ecommerce-d9a83.appspot.com",
+  messagingSenderId: "90775836694",
+  appId: "1:90775836694:web:d33c30715625493f5dfd37",
+  measurementId: "G-MJQ6T1JDXC",
 });
 
 const messaging = firebase.messaging();

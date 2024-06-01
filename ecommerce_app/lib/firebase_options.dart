@@ -42,54 +42,48 @@ class DefaultFirebaseOptions {
   }
 
   static FirebaseOptions web = FirebaseOptions(
-    apiKey: getApiKey('WEB_KEY')!,
-    appId: '1:641574119132:web:23aeeecad5120d7a14f619',
-    messagingSenderId: '641574119132',
-    projectId: 'project-red-9d656',
-    authDomain: 'project-red-9d656.firebaseapp.com',
-    storageBucket: 'project-red-9d656.appspot.com',
-    measurementId: 'G-N6GW3EJKPX',
+    apiKey: dotenv.env['WEB_KEY']!,
+    appId: '1:90775836694:web:d33c30715625493f5dfd37',
+    messagingSenderId: '90775836694',
+    projectId: 'red-ecommerce-d9a83',
+    authDomain: 'red-ecommerce-d9a83.firebaseapp.com',
+    storageBucket: 'red-ecommerce-d9a83.appspot.com',
+    measurementId: 'G-MJQ6T1JDXC',
   );
 
   static FirebaseOptions android = FirebaseOptions(
-    apiKey: getApiKey("ANDROID_KEY")!,
-    appId: '1:641574119132:android:4dfdb1310bbf3b0d14f619',
-    messagingSenderId: '641574119132',
-    projectId: 'project-red-9d656',
-    storageBucket: 'project-red-9d656.appspot.com',
+    apiKey: dotenv.env['ANDROID_KEY']!,
+    appId: '1:90775836694:android:b6e2d6ff2a5753665dfd37',
+    messagingSenderId: '90775836694',
+    projectId: 'red-ecommerce-d9a83',
+    storageBucket: 'red-ecommerce-d9a83.appspot.com',
   );
 
   static FirebaseOptions ios = FirebaseOptions(
-    apiKey: getApiKey("IOS_KEY")!,
-    appId: '1:641574119132:ios:fa49951c439f99a114f619',
-    messagingSenderId: '641574119132',
-    projectId: 'project-red-9d656',
-    storageBucket: 'project-red-9d656.appspot.com',
+    apiKey: dotenv.env['IOS_KEY']!,
+    appId: '1:90775836694:ios:7f006b7cf7a35cd35dfd37',
+    messagingSenderId: '90775836694',
+    projectId: 'red-ecommerce-d9a83',
+    storageBucket: 'red-ecommerce-d9a83.appspot.com',
     iosBundleId: 'com.example.ecommerceApp',
   );
 
   static FirebaseOptions macos = FirebaseOptions(
-    apiKey: getApiKey("MACOS_KEY")!,
-    appId: '1:641574119132:ios:fa49951c439f99a114f619',
-    messagingSenderId: '641574119132',
-    projectId: 'project-red-9d656',
-    storageBucket: 'project-red-9d656.appspot.com',
+    apiKey: dotenv.env['MACOS_KEY']!,
+    appId: '1:90775836694:ios:7f006b7cf7a35cd35dfd37',
+    messagingSenderId: '90775836694',
+    projectId: 'red-ecommerce-d9a83',
+    storageBucket: 'red-ecommerce-d9a83.appspot.com',
     iosBundleId: 'com.example.ecommerceApp',
   );
 
   static FirebaseOptions windows = FirebaseOptions(
-    apiKey: getApiKey("WINDOWS_KEY")!,
-    appId: '1:641574119132:web:b425390f577a8b9d14f619',
-    messagingSenderId: '641574119132',
-    projectId: 'project-red-9d656',
-    authDomain: 'project-red-9d656.firebaseapp.com',
-    storageBucket: 'project-red-9d656.appspot.com',
-    measurementId: 'G-6BY2BH05LK',
+    apiKey: dotenv.env['WINDOWS_KEY']!,
+    appId: '1:90775836694:web:6ded6132df3619ca5dfd37',
+    messagingSenderId: '90775836694',
+    projectId: 'red-ecommerce-d9a83',
+    authDomain: 'red-ecommerce-d9a83.firebaseapp.com',
+    storageBucket: 'red-ecommerce-d9a83.appspot.com',
+    measurementId: 'G-WS1YYN8TT3',
   );
-}
-
-String? getApiKey(String key) {
-  String? value = dotenv.env[key];
-  // print("$key: $value");
-  return value;
 }
