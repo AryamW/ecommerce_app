@@ -45,6 +45,7 @@ app.*.map.json
 
 # custom
 *.env
+.vscode
 services
 discard
 lib/data/datasources/chapa payment.txt
