@@ -3,7 +3,6 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -41,8 +40,8 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static FirebaseOptions web = FirebaseOptions(
-    apiKey: dotenv.env['WEB_KEY']!,
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyB1ifzra_LbCZJ5LnRzSeSyIsKyFOHRGDY',
     appId: '1:90775836694:web:d33c30715625493f5dfd37',
     messagingSenderId: '90775836694',
     projectId: 'red-ecommerce-d9a83',
@@ -51,16 +50,16 @@ class DefaultFirebaseOptions {
     measurementId: 'G-MJQ6T1JDXC',
   );
 
-  static FirebaseOptions android = FirebaseOptions(
-    apiKey: dotenv.env['ANDROID_KEY']!,
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyAVV16t_aObrCVzNr333Ly9PrHQo7Rl1fc',
     appId: '1:90775836694:android:b6e2d6ff2a5753665dfd37',
     messagingSenderId: '90775836694',
     projectId: 'red-ecommerce-d9a83',
     storageBucket: 'red-ecommerce-d9a83.appspot.com',
   );
 
-  static FirebaseOptions ios = FirebaseOptions(
-    apiKey: dotenv.env['IOS_KEY']!,
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyDfaScOe_IB7-zVu6VIeKC8SEoDxsADiSc',
     appId: '1:90775836694:ios:7f006b7cf7a35cd35dfd37',
     messagingSenderId: '90775836694',
     projectId: 'red-ecommerce-d9a83',
@@ -68,8 +67,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.ecommerceApp',
   );
 
-  static FirebaseOptions macos = FirebaseOptions(
-    apiKey: dotenv.env['MACOS_KEY']!,
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDfaScOe_IB7-zVu6VIeKC8SEoDxsADiSc',
     appId: '1:90775836694:ios:7f006b7cf7a35cd35dfd37',
     messagingSenderId: '90775836694',
     projectId: 'red-ecommerce-d9a83',
@@ -77,8 +76,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.ecommerceApp',
   );
 
-  static FirebaseOptions windows = FirebaseOptions(
-    apiKey: dotenv.env['WINDOWS_KEY']!,
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyB1ifzra_LbCZJ5LnRzSeSyIsKyFOHRGDY',
     appId: '1:90775836694:web:6ded6132df3619ca5dfd37',
     messagingSenderId: '90775836694',
     projectId: 'red-ecommerce-d9a83',
