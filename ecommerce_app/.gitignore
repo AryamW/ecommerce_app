@@ -44,7 +44,6 @@ app.*.map.json
 
 
 # custom
-*.env
 services
 discard
 lib/data/datasources/chapa payment.txt
