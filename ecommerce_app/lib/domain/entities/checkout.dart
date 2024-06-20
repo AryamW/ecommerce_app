@@ -9,7 +9,7 @@ class CheckoutModel {
   Map<String, String?> toJson() => {
         "currency": currency,
         "returnUrl": returnUrl,
-        "phoneNumber": "0943144152",
+        "phoneNumber": "$phoneNumber",
       };
 }
 
