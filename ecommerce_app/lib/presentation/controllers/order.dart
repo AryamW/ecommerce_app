@@ -25,7 +25,7 @@ class OrderController extends GetxController {
   void fetchOrders() async {
     try {
       var res = await useCase.fetchOrders();
-      orders(res);
+      orders(res.reversed.toList());
       orders.refresh();
     } on BadResponseException catch (e) {
       if (e.statusCode == 404) {
