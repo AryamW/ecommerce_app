@@ -13,6 +13,7 @@ import 'package:ecommerce_app/presentation/widgets/route_guard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 
 abstract class LoadingController extends GetxController {
   RxBool isLoading = false.obs;
@@ -27,6 +28,7 @@ class LoginController extends LoadingController {
   DioClient dio = DioClient();
   final email = "".obs;
   final password = "".obs;
+  RxnString fCMToken = RxnString(null);
   RxnString emailError = RxnString(null);
   RxnString passwordError = RxnString(null);
   final emailController = TextEditingController();
@@ -48,13 +50,20 @@ class LoginController extends LoadingController {
     }
   }
 
+  Future<void> saveFCMToken(String? token) async {
+    if (token != null) {
+      fCMToken.value = token;
+    }
+  }
+
   Future<void> submitForm() async {
     validateEmail();
     validatePassword();
     try {
       if (emailError.value == null && passwordError.value == null) {
         var use = AuthUserCase(
-            repo: AuthRepositoryImpl(authProvider: AuthDataSource()));
+            // repo: AuthRepositoryImpl(authProvider: AuthDataSource()));
+            repo: AuthRepositoryImpl(authProvider: AuthDataSourceV2()));
         var data = LoginModel(
             email: emailController.text, password: passwordController.text);
         var res = await use.login(data);
@@ -333,7 +342,7 @@ class ForgotPasswordController extends LoadingController {
               colorText: ThemeData.dark().colorScheme.onPrimary,
               "Success",
               "Your Request has been sent. Please wait a few minutes.");
-            Future.delayed(Duration(seconds: 2), () =>  Get.offAllNamed("/login"));
+          Future.delayed(Duration(seconds: 2), () => Get.offAllNamed("/login"));
         }
 
         email.value = '';

@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/core/utils/exceptions.dart';
-import 'package:ecommerce_app/data/data_sources/address.dart';
+import 'package:ecommerce_app/data/datasources/address.dart';
 import 'package:ecommerce_app/data/repositories/address.dart';
 import 'package:ecommerce_app/domain/entities/address.dart';
 import 'package:ecommerce_app/domain/usecases/address.dart';

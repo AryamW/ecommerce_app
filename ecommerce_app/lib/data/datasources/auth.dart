@@ -2,10 +2,13 @@
 
 import 'package:dio/dio.dart';
 import 'package:ecommerce_app/core/utils/exceptions.dart';
+import 'package:ecommerce_app/core/utils/firebase.dart';
 import 'package:ecommerce_app/core/utils/handleExceptions.dart';
 import 'package:ecommerce_app/domain/entities/auth.dart';
 import 'package:ecommerce_app/data/datasources/api_client.dart';
 import 'package:ecommerce_app/domain/entities/product.dart';
+import 'package:ecommerce_app/presentation/controllers/auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:io' show Platform;
 
@@ -118,6 +121,60 @@ class AuthDataSource {
     } catch (e) {
       return false;
     }
+  }
+}
+
+class AuthDataSourceV2 extends AuthDataSource {
+  @override
+  Future<bool> login(LoginModel user) async {
+    try {
+     String? fCMToken = Get.find<LoginController>().fCMToken.value;
+      var res = await dio.dio
+          .post("/auth/login", data: {...user.toJson(), "fCMToken": fCMToken});
+      if (res.statusCode == 200) {
+        // save access and refresh token to the storage
+        await dio.saveTokens(res.data["accessToken"], res.data["refreshToken"],
+            res.data["role"]);
+
+        return true;
+      }
+    } on AuthException catch (e) {
+      rethrow;
+    } on DioException catch (e) {
+      // handle dio exceptions.
+      handledioExceptions(e);
+    } catch (e) {
+      throw AuthException(message: "Login failed. try again.");
+    }
+    return false;
+  }
+
+  @override
+  Future<bool> logout() async {
+    try {
+      final response = await dio.dio.post("/auth/logout");
+      if (response.statusCode == 200) {
+        await dio.deleteTokens();
+        return true;
+      }
+    } on DioException catch (e) {
+      Get.snackbar(
+        "Log out failed",
+        e.message ?? "Failed with statusCode: ${e.response?.statusCode ?? 400}",
+        backgroundColor: ThemeData.dark().colorScheme.secondary,
+        colorText: ThemeData.dark().colorScheme.onPrimary,
+        duration: const Duration(seconds: 10),
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Log out failed",
+        "Something went wrong.",
+        backgroundColor: ThemeData.dark().colorScheme.secondary,
+        colorText: ThemeData.dark().colorScheme.onPrimary,
+        duration: const Duration(seconds: 10),
+      );
+    }
+    return false;
   }
 }
 

@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:ecommerce_app/core/utils/firebase.dart';
 import 'package:ecommerce_app/presentation/widgets/route_guard.dart';
+import 'package:firebase_app_installations/firebase_app_installations.dart';
+// import 'package:firebase_installations/firebase_installations.dart';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,18 +15,31 @@ import 'package:ecommerce_app/core/routes/routes.dart';
 import 'package:ecommerce_app/presentation/pages/entry_page.dart';
 import 'package:ecommerce_app/presentation/controllers/auth.dart';
 import 'package:ecommerce_app/presentation/widgets/roleBasedAccessControlWidget.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
   Get.put(ThemeController(), permanent: true);
   Get.put(GetMaterialController(), permanent: true);
-  Get.put(RouteGuard(),permanent: true);
+  Get.put(RouteGuard(), permanent: true);
   WidgetsFlutterBinding.ensureInitialized();
   Core core = Core();
   await core.setUserData();
   setPathUrlStrategy();
-
+  String? id;
   try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    await FirebaseApi().initNotification();
+  } catch (e) {
+    print(e);
+  }
+  // dssGco4-TaWEk8etjuGZmz:APA91bGaPSA-VPVSiYUu89NMpAYUjLY4reiza1im_yeU2keTVuLb9m5jflHkxsJh0hevmSSXDZJf5wZClcDRzbWJeWRxpPgxf58MPfS5I9jqTTh_zalGEOmqCjJl9oryg7bQsLDfZfeC
+  try {
+    // print("install: ${await getInstanceId()}");
     initUniLinks();
   } catch (e) {
     String? initialLink = await getInitialLink();
@@ -33,6 +50,7 @@ void main() async {
     print("init: $initialLink");
     print("platform error");
   }
+
   runApp(const MainApp());
 
   // handleDeepLink();
@@ -168,7 +186,7 @@ void handleLink(String? link) {
     String routeName = "${uri.path}";
 
     // Attempt to navigate to the route. If the route does not exist, GetX will throw an exception.
-        print('email email email, ${uri.path}');
+    print('email email email, ${uri.path}');
     try {
       if (routeName == "/email-sent" && queryParams.isNotEmpty) {
         ForgotPasswordController forgotPasswordController =

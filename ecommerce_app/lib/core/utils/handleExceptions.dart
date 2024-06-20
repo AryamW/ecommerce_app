@@ -17,15 +17,15 @@ void handledioExceptions(DioException e) {
     var message;
     if (e.response?.data.runtimeType == String) {
       message = e.response?.data;
-    } else if(e.response?.data["message"]!=null){
+    } else if (e.response?.data["message"] != null) {
       message = e.response?.data["message"];
-    } else if(e.response?.data["errors"]!=null){
+    } else if (e.response?.data["errors"] != null) {
       message = e.response?.data["errors"].toString();
-    }else {
+    } else {
       message = e.response?.data.toString();
     }
     throw BadResponseException(
-        message: message ?? "Unknown error that is returned from the server",
+        message: message ?? "Unknown error has occured",
         statusCode: e.response?.statusCode,
         path: e.requestOptions.path);
   } else {

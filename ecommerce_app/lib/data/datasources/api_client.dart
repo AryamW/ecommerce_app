@@ -47,7 +47,8 @@ class DioClient {
             Future.delayed(
                 Duration(seconds: 2), () => Get.offAllNamed("/login"));
           } on DioException catch (e) {
-            if (e.requestOptions.path == "/auth/refresh") {
+            if (e.requestOptions.path == "/auth/refresh" &&
+                (await getRefreshToken() != null)) {
               Get.offAllNamed("/login",
                   arguments: {"message": "Session Expired. Please login."});
               return;
