@@ -81,6 +81,7 @@ class OrderListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screen = MediaQuery.of(context).size.width;
+    var statuses = [null, "Pending", "Shipped", "Delivered"];
 
     var width;
     var maxwidth = 600.01;
@@ -113,7 +114,7 @@ class OrderListItem extends StatelessWidget {
               Wrap(
                 children: [
                   Text(
-                    'Status: ${order.status}',
+                    'Status: ${statuses[order.status]}',
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.onSecondary),
                   ),
@@ -152,6 +153,8 @@ class OrderDetailScreen extends StatelessWidget {
   OrderDetailScreen({super.key});
 
   Order? order = Get.arguments["order"];
+  var statuses = [null, "Pending", "Shipped", "Delivered"];
+
 /*
 "shippingAddress": {
         "addressId": 1,
@@ -197,7 +200,7 @@ class OrderDetailScreen extends StatelessWidget {
                   Text(
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.onPrimary),
-                      "Order Status: ${order!.status}"),
+                      "Order Status: ${statuses[order!.status]}"),
                   SizedBox(
                     height: 20,
                   ),
